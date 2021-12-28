@@ -22,7 +22,7 @@ class TagFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'tag_name' => ucfirst($this->faker->text(15)),
         ];
     }
 }

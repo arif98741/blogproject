@@ -8,15 +8,13 @@
                 <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}"><i
                             class="ti-home"></i>&nbsp;Home</a>
                 </li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.post.index') }}">Service</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.post.index') }}">Post</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Add Post</li>
             </ol>
         </nav>
 
     </div>
     <div class="container">
-
-
         <div class="card">
             <div class="card-body">
                 <form id="postFormSubmit" class="forms-sample" action="{{ route('admin.post.store') }}"
@@ -83,6 +81,13 @@
                                         <label for="">Meta Description</label>
                                         <textarea name="meta_description" id="meta_description" cols="30" rows="2"
                                                   class="form-control"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="">Meta Keywords</label>
+                                        <input name="meta_keywords" id="meta_keywords" cols="30" rows="2"
+                                               class="form-control">
                                     </div>
                                 </div>
                             </div>
@@ -173,30 +178,34 @@
 
                 $('#summernote').summernote({
                     height: "200px",
-                    toolbar: [
-                        ['popovers', ['lfm']],
-                        ['style', ['bold', 'italic', 'underline', 'clear']],
-                        ['font', ['strikethrough', 'superscript', 'subscript']],
-                        ['fontsize', ['fontsize']],
-                        ['color', ['color']],
-                        ['para', ['ul', 'ol', 'paragraph', 'h1', 'blockquote']],
-                        ['height', ['height']],
-                        ['insert', ['link', 'video']],
-                        ['misc', ['fullscreen', 'codeview', 'undo', 'redo']],
-                        ['view', ['help']]
-                    ],
-                    fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Merriweather'],
+                    placeholder: "Write your blog here. You can insert text, image, video, hyperlink here",
+                    fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Merriweather', 'Times New Roman'],
+                    dialogsInBody: true,
                     buttons: {
                         lfm: LFMButton
                     },
                     lineHeights: ['0.2', '0.3', '0.4', '0.5', '0.6', '0.8', '1.0', '1.2', '1.4', '1.5', '2.0', '3.0'],
-                    styleTags: [
-                        'p',
-                        {
-                            title: 'Blockquote', tag: 'blockquote', className: 'blockquote', value: 'blockquote'
-                        },
-                        'pre', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'
-                    ]
+                    toolbar: [
+                        ['popovers', ['lfm']],
+                        ['style', ['style']],
+                        ['fontsize', ['fontsize']],
+                        ['para', ['ul', 'ol', 'paragraph', 'h1']],
+                        ['style', ['bold', 'italic', 'underline', 'clear']],
+                        ['font', ['strikethrough', 'superscript', 'subscript']],
+                        ['color', ['color']],
+                        ['height', ['height']],
+                        ['insert', ['link', 'video', 'table', 'hr']],
+                        ['misc', ['fullscreen', 'codeview', 'undo', 'redo']],
+                        ['view', ['help']]
+
+                    ],
+                    spellCheck: true,
+                    popover: {
+                        air: [
+                            ['color', ['color']],
+                            ['font', ['bold', 'underline', 'clear']]
+                        ]
+                    }
                 });
 
                 //post form submit
@@ -205,17 +214,32 @@
 
                     const form = $(this);
                     const url = form.attr('action');
+                    let formData = new FormData(this);
 
 
                     $('.btn-save').text('Saving');
                     $.ajax({
                         type: "POST",
                         url: url,
-                        data: form.serialize(), // serializes the form's elements.
+                        contentType: false,
+                        processData: false,
+                        data: formData, // serializes the form's elements.
                         success: function (data, textStatus, xhr) {
 
                             if (xhr.status === 200) {
+                                form.find('input').each(function (e, data) {
+                                    $('#title').val('');
+                                    $('#meta_title').val('');
+                                    $('#meta_description').val('');
+                                    $('#meta_keywords').val('');
+
+                                    $('#summernote').summernote('reset');
+                                });
+
                                 toastr.success('Data Inserted successfully');
+                                setTimeout(function () {
+                                    window.location.href = '{{ route('admin.post.index') }}';
+                                }, 1000);
                             }
                         },
                         error: function (e) {
@@ -225,13 +249,6 @@
                             });
                         },
                         complete: function () {
-                            form.find('input').each(function (e, data) {
-                                $('#title').val('');
-                                $('#meta_title').val('');
-                            });
-                            $('#meta_description').val('');
-
-                            $('#summernote').summernote('reset');
                             $('.btn-save').text('Save');
                         }
                     });

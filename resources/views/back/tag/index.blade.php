@@ -1,5 +1,5 @@
 @extends('back.layout.layout')
-@section('title','Category List')
+@section('title','Tag List')
 @section('content')
     <div class="content-header">
 
@@ -8,7 +8,7 @@
                 <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}"><i
                             class="ti-home"></i>&nbsp;Home</a>
                 </li>
-                <li class="breadcrumb-item active">Category List</li>
+                <li class="breadcrumb-item active">Tag List</li>
             </ol>
         </nav>
     </div>
@@ -17,42 +17,42 @@
         <div class="col-lg-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Category List</h4>
+                    <h4 class="card-title">Tag List</h4>
 
                     <div class="table-responsive pt-3">
                         <table class="table table-bordered">
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th> Category Name</th>
+                                <th> Tag Name</th>
                                 <th> Status</th>
                                 <th>Created_at</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($categories as $key=> $category)
+                            @foreach($tags as $key=> $tag)
                                 <tr>
                                     <td>
                                         {{ ++$key }}
                                     </td>
-                                    <td>{{ $category->category_name }}</td>
+                                    <td>{{ $tag->tag_name }}</td>
 
                                     <td>
-                                        @if($category->status == 1)
+                                        @if($tag->status == 1)
                                             <i class="ti-check menu-icon text-center"></i> &nbsp; Active
                                         @else
                                             <i class="ti-close menu-icon text-center"></i> &nbsp; Inactive
                                         @endif
                                     </td>
                                     <td>
-                                        {{ date('d-m-Y',strtotime( $category->created_at )) }}
+                                        {{ date('d-m-Y',strtotime( $tag->created_at )) }}
                                     </td>
-                                    <td><a href="{{ route('admin.category.edit',$category->id) }}"
+                                    <td><a href="{{ route('admin.tag.edit',$tag->id) }}"
                                            class="btn-sm btn btn-primary"><i class="fa fa-pencil-alt"></i></a>
 
                                         <form style="display: inline-block" class="d-none"
-                                              action="{{ route('admin.category.destroy',$category->id) }}"
+                                              action="{{ route('admin.tag.destroy',$tag->id) }}"
                                               method="POST">
                                             @csrf
                                             @method('DELETE')

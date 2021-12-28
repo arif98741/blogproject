@@ -26,11 +26,9 @@
                         </p>
                     </a>
                 </li>
-
-
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-copy"></i>
+                        <i class="nav-icon fas fa-pen"></i>
                         <p>
                             Post
                             <i class="right fas fa-angle-left"></i>
@@ -63,16 +61,41 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('admin.post.create') }}" class="nav-link">
+                            <a href="{{ route('admin.category.create') }}" class="nav-link">
                                 <i class="far fa-plus nav-icon"></i>
                                 <p>Add Categories</p>
 
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('admin.post.index') }}" class="nav-link">
+                            <a href="{{ route('admin.category.index') }}" class="nav-link">
                                 <i class="far fa-plus nav-icon"></i>
-                                <p>Post List</p>
+                                <p>Category List</p>
+
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-tags"></i>
+                        <p>
+                            Tag
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.tag.create') }}" class="nav-link">
+                                <i class="far fa-plus nav-icon"></i>
+                                <p>Add Tag</p>
+
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.tag.index') }}" class="nav-link">
+                                <i class="far fa-plus nav-icon"></i>
+                                <p>Tag List</p>
 
                             </a>
                         </li>

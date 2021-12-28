@@ -1,5 +1,5 @@
 @extends('back.layout.layout')
-@section('title','Service List')
+@section('title','Post List')
 @section('content')
     <div class="content-header">
 
@@ -8,7 +8,7 @@
                 <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}"><i
                             class="ti-home"></i>&nbsp;Home</a>
                 </li>
-                <li class="breadcrumb-item active">Service List</li>
+                <li class="breadcrumb-item active">Post</li>
             </ol>
         </nav>
 
@@ -18,7 +18,7 @@
         <div class="col-lg-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Service List</h4>
+                    <h4 class="card-title">Post</h4>
 
                     <div class="table-responsive pt-3">
                         <table class="table table-bordered">
@@ -26,7 +26,7 @@
                             <tr>
                                 <th>#</th>
                                 <th> Post Name</th>
-                                <th></th>
+                                <th>Image</th>
                                 <th>Description</th>
                                 <th>Status</th>
                                 <th>Created_at</th>
@@ -34,30 +34,31 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($services as $key=> $service)
+                            @foreach($posts as $key=> $post)
                                 <tr>
                                     <td>
                                         {{ ++$key }}
                                     </td>
-                                    <td>{{ $service->name }}</td>
+                                    <td>{{ $post->title }}</td>
                                     <td><img style="height: 100px; width: 100px;"
-                                             src="{{ asset('service/'.$service->thumbnail) }}" alt=""></td>
-                                    <td>{!! substr($service->text,0,20) !!}  </td>
+                                             src="{{ asset($post->thumbnail_image) }}" alt=""></td>
+
+                                    <td>{{ $post->meta_title }}  </td>
                                     <td>
-                                        @if($service->status == 1)
+                                        @if($post->status == 1)
                                             <i class="ti-check menu-icon text-center"></i> &nbsp; Active
                                         @else
                                             <i class="ti-close menu-icon text-center"></i> &nbsp; Inactive
                                         @endif
                                     </td>
                                     <td>
-                                        {{ date('d-m-Y',strtotime( $service->created_at )) }}
+                                        {{ date('d-m-Y',strtotime( $post->created_at )) }}
                                     </td>
-                                    <td><a href="{{ route('admin.service.edit',$service->id) }}"
+                                    <td><a href="{{ route('admin.post.edit',$post->id) }}"
                                            class="btn-sm btn btn-primary"><i class="fa fa-pencil-alt"></i></a>
 
                                         <form style="display: inline-block" class="d-none"
-                                              action="{{ route('admin.service.destroy',$service->id) }}"
+                                              action="{{ route('admin.post.destroy',$post->id) }}"
                                               method="POST">
                                             @csrf
                                             @method('DELETE')

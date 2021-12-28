@@ -17,8 +17,10 @@ class CreatePostsTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->string('feature_image', 150)->nullable();
+            $table->string('thumbnail_image', 150)->nullable();
             $table->string('meta_title')->nullable();
             $table->text('meta_description')->nullable();
+            $table->text('meta_keywords')->nullable();
             $table->string('status', 10)->default('published');
             $table->timestamps();
         });

@@ -24,8 +24,13 @@ Route::group(
     Route::get('dashboard', 'AdminController@dashboard')->name('dashboard');
     Route::resource('post', 'PostController')->except(['show']);
     Route::resource('category', 'CategoryController')->except(['show']);
+    Route::resource('tag', 'TagController')->except(['show']);
     Route::get('dashboard', 'AdminController@dashboard')->name('dashboard');
+});
 
+Route::get('blog/view', function () {
+    $data['blog'] = \App\Models\Post::orderBy('id','desc')->limit(1)->first();
+    return view('welcome')->with($data);
 });
 
 
