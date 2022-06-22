@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c624f4b7c565f1ec4248fa6d61ad0f0d",
+    "content-hash": "7536623dfe0a0572e463ccba8cab4104",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -5701,6 +5701,60 @@
             "time": "2021-10-18T11:10:58+00:00"
         },
         {
+            "name": "xenon/multicourier",
+            "version": "v1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/arif98741/multicourier.git",
+                "reference": "6f19b39868dc33934b73d839d7bbe5cb90ea093c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/arif98741/multicourier/zipball/6f19b39868dc33934b73d839d7bbe5cb90ea093c",
+                "reference": "6f19b39868dc33934b73d839d7bbe5cb90ea093c",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^6.3|^7.3"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Xenon\\MultiCourier\\MultiCourierServiceProvider"
+                    ],
+                    "aliases": []
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Xenon\\MultiCourier\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ariful islam",
+                    "email": "arif98741@gmail.com"
+                }
+            ],
+            "description": "This is a courier api endpoints library for interacting such as e-courier, pathao, paperfly etc",
+            "support": {
+                "issues": "https://github.com/arif98741/multicourier/issues",
+                "source": "https://github.com/arif98741/multicourier/tree/v1.0.3"
+            },
+            "funding": [
+                {
+                    "url": "https://www.patreon.com/arif98741",
+                    "type": "patreon"
+                }
+            ],
+            "time": "2022-06-14T19:47:16+00:00"
+        },
+        {
             "name": "xenon/nagad-api",
             "version": "v1.9.0.2",
             "source": {
@@ -8280,5 +8334,5 @@
         "php": "^7.3|^8.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.3.0"
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Post;
 use Illuminate\Support\Facades\Route;
 use NagadApi\Base;
 use NagadApi\Helper;
@@ -29,7 +30,7 @@ Route::group(
 });
 
 Route::get('blog/view', function () {
-    $data['blog'] = \App\Models\Post::orderBy('id','desc')->limit(1)->first();
+    $data['blog'] = Post::orderBy('id','desc')->limit(1)->first();
     return view('welcome')->with($data);
 });
 

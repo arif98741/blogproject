@@ -15,7 +15,7 @@
 <body>
 <div class="container">
     <div class="row">
-        <div class="mx-auto col-md-8">
+        <div class="mx-auto col-md-10">
             {!! $blog->description !!}
         </div>
     </div>

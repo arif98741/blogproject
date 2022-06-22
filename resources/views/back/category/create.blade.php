@@ -1,21 +1,26 @@
 @extends('back.layout.layout')
 @section('title','Add Category')
 @section('content')
-    <div class="content-header">
-
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}"><i
-                            class="ti-home"></i>&nbsp;@lang('Home')</a>
-                </li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.category.index') }}">@lang('Category') </a></li>
-                <li class="breadcrumb-item active" aria-current="page">@lang('Edit Category')</li>
-            </ol>
-        </nav>
-
-    </div>
-    <div class="container">
-        <div class="col-md-12 grid-margin stretch-card">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-left">
+                        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}"><i
+                                    class="ti-home"></i>&nbsp;Home</a>
+                        </li>
+                        <li class="breadcrumb-item active">Add Category</li>
+                    </ol>
+                </div>
+                <div class="col-sm-6">
+                    <a href="{{ route('admin.category.index') }}" class="btn btn-primary btn-sm float-sm-right">Back to
+                        categories</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="container-fluid">
+        <div class="col-md-8 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
                     <form id="categoryFormSubmit" class="forms-sample"
@@ -32,8 +37,11 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="">Image</label>
-                                    <input type="file" name="image">
+                                    <label for="">Category Title</label>
+                                    <input name="image" id="imgFile"
+                                           type="file" class="form-control">
+                                    <img id="imgPreview" style="width: 150px; height: 150px; " class="d-none mt-3"
+                                         src="#" alt="your image"/>
                                 </div>
                             </div>
                         </div>
@@ -50,11 +58,28 @@
 
     @push('extra-css')
         <link rel="stylesheet" href="{{ asset('assets/back/plugins/dropzone/min/dropzone.min.css') }}">
+
     @endpush
     @push('extra-script')
+
         <script src="{{ asset('assets/back/plugins/dropzone/min/dropzone.min.js') }}"></script>
         <script>
 
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        $('#imgPreview').attr('src', e.target.result)
+                            .removeClass('d-none');
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            $("#imgFile").change(function () {
+                readURL(this);
+            });
 
             $("#categoryFormSubmit").submit(function (e) {
                 e.preventDefault(); // avoid to execute the actual submit of the form.
@@ -69,12 +94,10 @@
                     url: url,
                     data: form.serialize(), // serializes the form's elements.
                     success: function (data, textStatus, xhr) {
-
                         if (xhr.status === 200) {
+                            $('#imgFile').val('');
+                            $('#imgPreview').addClass('d-none');
                             toastr.success(data.success);
-                            setTimeout(function () {
-                                window.location.href = '{{ route('admin.category.index') }}';
-                            }, 1000);
                         }
                     },
                     error: function (e) {
@@ -93,6 +116,7 @@
                 });
             });
         </script>
+
     @endpush
 
 @endsection

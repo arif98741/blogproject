@@ -1,20 +1,23 @@
 @extends('back.layout.layout')
 @section('title','Edit Post')
 @section('content')
-    <div class="content-header">
-
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}"><i
-                            class="ti-home"></i>&nbsp;Home</a>
-                </li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.post.index') }}">Post</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Edit Post</li>
-            </ol>
-        </nav>
-
-    </div>
-    <div class="container">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-left">
+                        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}"><i class="ti-home"></i>&nbsp;Home</a>
+                        </li>
+                        <li class="breadcrumb-item active">Edit Post</li>
+                    </ol>
+                </div>
+                <div class="col-sm-6">
+                    <a href="{{ route('admin.post.index') }}" class="btn btn-primary btn-sm float-sm-right">Back to Posts</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="container-fluid">
 
         <div class="card">
             <div class="card-body">
