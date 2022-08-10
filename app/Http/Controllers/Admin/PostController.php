@@ -30,7 +30,7 @@ class PostController extends Controller
     public function index()
     {
         $data = [
-            'posts' => Post::with(['user','tags','categories'])->orderBy('id', 'desc')->paginate(20),
+            'posts' => Post::with(['user', 'tags', 'categories'])->orderBy('id', 'desc')->paginate(20),
             'title' => 'Post List',
         ];
 
@@ -75,25 +75,16 @@ class PostController extends Controller
 
 
         if ($request->hasFile('feature_image')) {
-            $uploadfile = ImageHelper::imageUpload($request, 'feature_image', 'post', 'post', true, 500, 450);
+            $uploadFile = ImageHelper::imageUpload($request, 'feature_image', 'post', 'post', true, 500, 450);
 
-            $data['feature_image'] = $uploadfile['file_path'];
-            $data['thumbnail_image'] = $uploadfile['thumb_path'];
+            $data['feature_image'] = $uploadFile['file_path'];
+            $data['thumbnail_image'] = $uploadFile['thumb_path'];
         }
 
         unset($data['categories_id']);
 
         if ($post = Post::create($data)) {
-            foreach ($request->categories_id as $category) {
-                $blog_cats ['category_id'] = $category;
-                $blog_cats['post_id'] = $post->id;
-                CategoryPost::create($blog_cats);
-            }
-            foreach ($request->tags as $tag) {
-                $blog_tags ['tag_id'] = $tag;
-                $blog_tags['post_id'] = $post->id;
-                PostTag::create($blog_tags);
-            }
+            $this->syncCategoryTag($request, $post);
 
             AppFacade::generateActivityLog('posts', 'create', $post->id);
             return redirect()->route('admin.post.index')->with('alert', [
@@ -157,10 +148,10 @@ class PostController extends Controller
                 File::delete($post->thumbnail_image);
             }
 
-            $uploadfile = ImageHelper::imageUpload($request, 'feature_image', 'post', 'post', true, 500, 450);
+            $uploadFile = ImageHelper::imageUpload($request, 'feature_image', 'post', 'post', true, 500, 450);
 
-            $data['feature_image'] = $uploadfile['file_path'];
-            $data['thumbnail_image'] = $uploadfile['thumb_path'];
+            $data['feature_image'] = $uploadFile['file_path'];
+            $data['thumbnail_image'] = $uploadFile['thumb_path'];
         }
 
         if ($post->update($data)) {
@@ -168,16 +159,7 @@ class PostController extends Controller
             CategoryPost::where('post_id', $post->id)->delete();
             PostTag::where('post_id', $post->id)->delete();
 
-            foreach ($request->categories_id as $category) {
-                $blog_cats ['category_id'] = $category;
-                $blog_cats['post_id'] = $post->id;
-                CategoryPost::create($blog_cats);
-            }
-            foreach ($request->tags as $tag) {
-                $blog_tags ['tag_id'] = $tag;
-                $blog_tags['post_id'] = $post->id;
-                PostTag::create($blog_tags);
-            }
+            $this->syncCategoryTag($request, $post);
             AppFacade::generateActivityLog('posts', 'update', $post->id);
 
             return redirect()->route('admin.post.index')->with('alert', [
@@ -195,6 +177,25 @@ class PostController extends Controller
     public function destroy()
     {
 
+    }
+
+    /**
+     * @param Request $request
+     * @param Post $post
+     * @return void
+     */
+    protected function syncCategoryTag(Request $request, Post $post): void
+    {
+        foreach ($request->categories_id as $category) {
+            $blog_cats ['category_id'] = $category;
+            $blog_cats['post_id'] = $post->id;
+            CategoryPost::create($blog_cats);
+        }
+        foreach ($request->tags as $tag) {
+            $blog_tags ['tag_id'] = $tag;
+            $blog_tags['post_id'] = $post->id;
+            PostTag::create($blog_tags);
+        }
     }
 
 }

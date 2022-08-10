@@ -8279,7 +8279,7 @@ $.extend( Datepicker.prototype, {
 	 *					dayNames		string[7] - names of the days from Sunday (optional)
 	 *					monthNamesShort string[12] - abbreviated names of the months (optional)
 	 *					monthNames		string[12] - names of the months (optional)
-	 * @return  Date - the extracted date value or null if value is blank
+	 * @return  Date - the syncCategoryTag date value or null if value is blank
 	 */
 	parseDate: function( format, value, settings ) {
 		if ( format == null || value == null ) {

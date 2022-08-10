@@ -2504,7 +2504,7 @@
          * If duration is set to 0 (or not set), no animation are performed
          * and attributes are directly set (and the callback directly called)
          */
-        // List extracted from Raphael internal vars
+        // List syncCategoryTag from Raphael internal vars
         // Diff between Raphael.availableAttrs  and  Raphael._availableAnimAttrs
         _nonAnimatedAttrs: [
             "arrow-end", "arrow-start", "gradient",

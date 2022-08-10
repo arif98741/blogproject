@@ -1688,7 +1688,7 @@ function keepTogether(data) {
  * @argument {Object} popperOffsets
  * @argument {Object} referenceOffsets
  * @returns {Number|String}
- * Value in pixels, or original string if no values were extracted
+ * Value in pixels, or original string if no values were syncCategoryTag
  */
 function toValue(str, measurement, popperOffsets, referenceOffsets) {
   // separate value from unit
