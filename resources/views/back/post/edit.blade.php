@@ -21,6 +21,7 @@
         </div>
     </section>
     <div class="container-fluid">
+{{--        @dd($errors)--}}
         <div class="card">
             <div class="card-body">
                 <form id="postFormSubmit" class="forms-sample" action="{{ route('admin.post.update',$post->id) }}"

@@ -29,6 +29,8 @@
                                 <th>Image</th>
                                 <th>Author</th>
                                 <th>Description</th>
+                                <th>Category</th>
+                                <th>Tags</th>
                                 <th>Status</th>
                                 <th>Created_at</th>
                                 <th>Action</th>
@@ -47,7 +49,45 @@
                                     <td>{{ $post->user->name }}</td>
                                     <td>{{ $post->meta_title }}  </td>
                                     <td>
-                                        <label for="" class="badge badge-success"> {{ $post->status }}</label>&nbsp;
+
+                                        @foreach($post->categories as $key=>$category)
+                                            <label for="" class="badge badge-info" style="min-width: 50px"><i
+                                                    class="fas fa-folder"></i>&nbsp;{{ $category->category_name }}
+                                            </label>
+                                            @if($key%2==1)
+                                                <br>
+                                            @endif
+                                            &nbsp;
+                                        @endforeach
+                                    </td>
+                                    <td>
+
+                                        @foreach($post->tags as $key=>$tag)
+                                            <label for="" class="badge badge-info" style="min-width: 50px"><i
+                                                    class="fas fa-tag"></i>&nbsp;{{ $tag->tag_name }}</label>&nbsp;
+                                            @if($key%2==1)
+                                                <br>
+                                            @endif
+                                            &nbsp;
+                                        @endforeach
+                                    </td>
+
+                                    <td>
+                                        @if($post->status =='published')
+                                            @php $postStatus = 'success'; @endphp
+                                        @elseif($post->status =='pending')
+                                            @php $postStatus = 'warning'; @endphp
+                                        @elseif($post->status =='draft')
+                                            @php $postStatus = 'dark'; @endphp
+                                        @elseif($post->status =='deleted')
+                                            @php $postStatus = 'danger'; @endphp
+
+                                        @elseif($post->status =='need_modification')
+                                            @php $postStatus = 'info'; @endphp
+                                        @else
+                                            @php $postStatus = 'info'; @endphp
+                                        @endif
+                                        <label for="" class="badge badge-{{ $postStatus }}"> {{ $post->status }}</label>&nbsp;
                                     </td>
                                     <td>
                                         {{ date('d-m-Y',strtotime( $post->created_at )) }}

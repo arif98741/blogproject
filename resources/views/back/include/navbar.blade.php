@@ -5,7 +5,10 @@
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-            <a href="{{ route('admin.dashboard') }}" class="nav-link">Home</a>
+            <a href="{{ route('admin.dashboard') }}" class="nav-link"><i class="fa fa-home"></i>&nbsp;Home</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="{{ route('admin.post.create') }}" class="nav-link"><i class="fas fa-pen"></i>&nbsp;Post Blog</a>
         </li>
         {{--        <li class="nav-item d-none d-sm-inline-block">--}}
         {{--            <a href="#" class="nav-link">Contact</a>--}}

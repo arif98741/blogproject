@@ -30,7 +30,7 @@ class PostController extends Controller
     public function index()
     {
         $data = [
-            'posts' => Post::with(['user'])->orderBy('id', 'desc')->paginate(20),
+            'posts' => Post::with(['user','tags','categories'])->orderBy('id', 'desc')->paginate(20),
             'title' => 'Post List',
         ];
 
@@ -80,6 +80,8 @@ class PostController extends Controller
             $data['feature_image'] = $uploadfile['file_path'];
             $data['thumbnail_image'] = $uploadfile['thumb_path'];
         }
+
+        unset($data['categories_id']);
 
         if ($post = Post::create($data)) {
             foreach ($request->categories_id as $category) {
@@ -131,17 +133,21 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+
         $rules = [
-            'title' => 'required|min:3|unique:posts,title,' . $post->id,
+            'title' => 'required|min:3',
             'description' => 'required',
+            'categories_id' => 'required',
             'status' => 'required',
             'meta_title' => 'sometimes|min:3|max:100',
             'meta_description' => 'sometimes|min:3|max:160',
             'meta_keywords' => 'sometimes|max:160',
         ];
 
+
         $data = $this->validate($request, $rules);
         $data['updated_by'] = $this->getUserId();
+        unset($data['categories_id']);
 
         if ($request->hasFile('feature_image')) {
             if (File::exists($post->feature_image)) {

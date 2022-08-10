@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Events\UserActivityLogEvent;
+use App\Events\UserLoginAttempt;
+use App\Listeners\UserActivityLogListener;
+use App\Listeners\UserLoginAttemptListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -17,6 +21,12 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
+        ],
+        UserLoginAttempt::class => [
+            UserLoginAttemptListener::class,
+        ],
+        UserActivityLogEvent::class => [
+            UserActivityLogListener::class,
         ],
     ];
 
