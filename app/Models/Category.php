@@ -12,16 +12,16 @@ class Category extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'category_name'
-    ];
+    protected $table = 'categories';
+
+    protected $guarded = [];
 
     /**
      * @return BelongsToMany
      */
-    public function post()
+    public function posts()
     {
-        return $this->belongsToMany(Post::class);
+        return $this->belongsToMany(Post::class, 'category_post');
     }
 
     /**
@@ -39,21 +39,25 @@ class Category extends Model
             ->orderBy($orderBy, $order)
             ->get();
 
-        return (new Category)->categoryItems($items);
+        return self::categoryItems($items);
     }
 
     /**
      * @param Collection $items
      * @return array|mixed
      */
-    private function categoryItems(Collection $items)
+    private static function categoryItems(Collection $items)
     {
         $childs = [];
-        foreach ($items as $item)
+        foreach ($items as $item) {
             $childs[$item->parent_id][] = $item;
+        }
 
-        foreach ($items as $item) if (isset($childs[$item->id]))
-            $item->childs = $childs[$item->id];
+        foreach ($items as $item) {
+            if (isset($childs[$item->id])) {
+                $item->childs = $childs[$item->id];
+            }
+        }
 
         if (!empty($childs[0])) {
             $tree = $childs[0];

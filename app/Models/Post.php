@@ -10,6 +10,9 @@ class Post extends Model
 {
     use HasFactory;
 
+    /**
+     * @var string[]
+     */
     protected $fillable = [
         'title',
         'description',
@@ -24,9 +27,9 @@ class Post extends Model
     /**
      * @return BelongsToMany
      */
-    public function category()
+    public function categories()
     {
-        return $this->belongsToMany(Category::class);
+      //  return $this->belongsToMany(Category::class, 'category_post');
     }
 
     /**
@@ -35,5 +38,10 @@ class Post extends Model
     public function tags()
     {
         return $this->belongsToMany(Tag::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

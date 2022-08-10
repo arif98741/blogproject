@@ -62,11 +62,9 @@
                                               method="POST">
                                             @csrf
                                             @method('DELETE')
-
                                             <button onclick="return(confirm('are you sure to delete?'))"
                                                     class="btn btn-danger btn-sm" type="submit"><i
                                                     class="fa fa-trash-alt"></i></button>
-
                                         </form>
 
                                     </td>
@@ -75,6 +73,7 @@
 
                             </tbody>
                         </table>
+                        {{ $posts->links() }}
                     </div>
                 </div>
             </div>

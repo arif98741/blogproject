@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Image;
 
@@ -14,12 +15,13 @@ class ImageHelper
      * @param Request $request
      * @param $image
      * @param $path
+     * @param null $prefix
      * @param bool $thumb
      * @param int $width
      * @param int $height
      * @return array
      */
-    public static function imageUpload($request, $image, $path, $prefix = null, bool $thumb = false, int $width = 300, int $height = 300): array
+    public static function imageUpload(Request $request, $image, $path, $prefix = null, bool $thumb = false, int $width = 300, int $height = 300): array
     {
         $response = [];
         $image = $request->file($image);

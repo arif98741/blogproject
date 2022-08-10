@@ -14,8 +14,9 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.3",
         "unisharp/laravel-filemanager": "^2.2",
+        "spatie/laravel-db-snapshots": "^1.7",
+        "spatie/laravel-permission": "^5.5",
         "xenon/laravelbdsms": "v1.0.36.5",
-        "xenon/multicourier": "^1.0",
         "xenon/nagad-api": "v1.9.0.2"
     },
     "require-dev": {
@@ -24,7 +25,9 @@
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^5.10",
-        "phpunit/phpunit": "^9.5.8"
+        "phpunit/phpunit": "^9.5.8",
+        "barryvdh/laravel-debugbar": "^3.6",
+        "barryvdh/laravel-ide-helper": "^2.12"
     },
     "autoload": {
         "psr-4": {

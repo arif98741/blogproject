@@ -14,7 +14,8 @@
                     </ol>
                 </div>
                 <div class="col-sm-6">
-                    <a href="{{ route('admin.category.create') }}" class="btn btn-primary btn-sm float-sm-right">Add New</a>
+                    <a href="{{ route('admin.category.create') }}" class="btn btn-primary btn-sm float-sm-right">Add
+                        New</a>
                 </div>
             </div>
         </div>
@@ -27,7 +28,134 @@
                 <div class="card-body">
                     <h4 class="card-title">Category List</h4>
 
-                    <div class="table-responsive pt-3">
+                    {{--                    tree structure start--}}
+                    <style>
+                        ul, li {
+                            list-style: none;
+                            margin: 0;
+                            padding: 0;
+                        }
+
+                        ul.treeRoot > li ul,
+                        ul.treeRoot > li ul {
+                            padding-left: 20px;
+                        }
+
+                        ul.treeRoot li {
+                            border-left: 1px solid #000;
+                        }
+
+                        ul.treeRoot ul li,
+                        ul.treeRoot li {
+                            border-left: 1px solid #000;
+                            padding-left: 20px;
+                            position: relative;
+                            font-size: 16px;
+                            line-height: 24px;
+                        }
+
+                        ul.treeRoot ul li:last-child:after,
+                        ul.treeRoot li:last-child:after {
+                            position: absolute;
+                            content: "";
+                            display: inline-block;
+                            top: 12px;
+                            width: 1px;
+                            left: -1px;
+                            bottom: 0;
+                            background: #fff
+                        }
+
+                        ul.treeRoot ul li:before,
+                        ul.treeRoot li:before {
+                            height: 1px;
+                            background: #000;
+                            width: 15px;
+                            left: 0;
+                            top: 11px;
+                            display: inline-block;
+                            content: "";
+                            position: absolute;
+                        }
+
+                        .treeRoot li ul {
+                            display: none;
+                        }
+
+                        .treeRoot li ul.activeSubMenu {
+                            display: block;
+                        }
+                    </style>
+
+                    <ul class="treeRoot">
+                        <li class="hasSubMenu"><span>Root</span>
+                            <ul class="activeSubMenu">
+                                <li class="hasSubMenu"><span><i class="fa fa-folder"></i>&nbsp;Branch1</span>
+                                    <ul>
+                                        <li><span><i class="fa fa-folder"></i>&nbsp;Branch1-sub2</span></li>
+                                        <li><span><i class="fa fa-folder"></i>&nbsp;Branch1-sub3</span></li>
+                                        <li><span><i class="fa fa-folder"></i>&nbsp;Branch1-sub4</span></li>
+                                        <li><span><i class="fa fa-folder"></i>&nbsp;Branch1-sub5</span></li>
+                                        <li><span><i class="fa fa-folder"></i>&nbsp;Branch1-sub6</span></li>
+                                    </ul>
+                                </li>
+                                <li><span><i class="fa fa-folder"></i>&nbsp;Branch2</span></li>
+                                <li class="hasSubMenu"><span><i class="fa fa-folder"></i>&nbsp;Branch3</span>
+                                    <ul>
+                                        <li><span><i class="fa fa-folder"></i>Branch3-sub1</span></li>
+                                        <li class="hasSubMenu"><span><i class="fa fa-folder"></i>Branch3-sub2</span>
+                                            <ul>
+                                                <li><span><i class="fa fa-folder"></i>&nbsp;Branch3-sub1</span></li>
+                                                <li><span><i class="fa fa-folder"></i>&nbsp;Branch3-sub2</span></li>
+                                                <li><span><i class="fa fa-folder"></i>&nbsp;Branch3-sub3</span></li>
+                                                <li><span><i class="fa fa-folder"></i>&nbsp;Branch3-sub4</span></li>
+                                                <li><span><i class="fa fa-folder"></i>&nbsp;Branch3-sub5</span></li>
+                                                <li><span><i class="fa fa-folder"></i>&nbsp;Branch3-sub6</span></li>
+                                                <li class="hasSubMenu"><span><i class="fa fa-folder"></i>&nbsp;Branch Demo</span>
+                                                    <ul>
+                                                        <li><span><i class="fa fa-folder"></i>&nbsp;Branch3-sub1</span>
+                                                        </li>
+                                                        <li class="hasSubMenu"><span><i class="fa fa-folder"></i>Branch3-sub2</span>
+                                                            <ul>
+                                                                <li><span><i class="fa fa-folder"></i>&nbsp;Branch3-sub1</span>
+                                                                </li>
+                                                                <li><span><i class="fa fa-folder"></i>&nbsp;Branch3-sub2</span>
+                                                                </li>
+                                                                <li><span><i class="fa fa-folder"></i>&nbsp;Branch3-sub3</span>
+                                                                </li>
+                                                                <li><span><i class="fa fa-folder"></i>&nbsp;Branch3-sub4</span>
+                                                                </li>
+                                                                <li><span><i class="fa fa-folder"></i>&nbsp;Branch3-sub5</span>
+                                                                </li>
+                                                                <li><span><i class="fa fa-folder"></i>&nbsp;Branch3-sub6</span>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                        <li><span><i class="fa fa-folder"></i>&nbsp;Branch3-sub3</span>
+                                                        </li>
+                                                        <li><span><i class="fa fa-folder"></i>&nbsp;Branch3-sub4</span>
+                                                        </li>
+                                                        <li><span><i class="fa fa-folder"></i>&nbsp;Branch3-sub5</span>
+                                                        </li>
+                                                        <li><span><i class="fa fa-folder"></i>&nbsp;Branch3-sub6</span>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li><span><i class="fa fa-folder"></i>&nbsp;Branch3-sub3</span></li>
+                                        <li><span><i class="fa fa-folder"></i>&nbsp;Branch3-sub4</span></li>
+                                        <li><span><i class="fa fa-folder"></i>&nbsp;Branch3-sub5</span></li>
+                                        <li><span><i class="fa fa-folder"></i>&nbsp;Branch3-sub6</span></li>
+                                    </ul>
+                                </li>
+                            </ul>
+
+                        </li>
+                    </ul>
+                    {{--tree structure end--}}
+
+                    <div class="table-responsive pt-3 d-none">
                         <table class="table table-bordered mb-4">
                             <thead>
                             <tr>
@@ -77,7 +205,6 @@
                                     </td>
                                 </tr>
                                 @if(property_exists($category,'childs'))
-
 
                                     @foreach($category->childs as $childCatKey => $childCat)
 
@@ -195,5 +322,24 @@
                 $(e.target).closest('form').submit() // Post the surrounding form
             }
         });
+
+
     </script>
+    @push('extra-script')
+        <script>
+            $("ul.treeRoot li span").on("click", function () {
+                if ($(this).parent().hasClass("hasSubMenu")) {
+                    if ($(this).parent().find("ul").hasClass("activeSubMenu")) {
+                        $(this).parent().find("ul").removeClass("activeSubMenu");
+                        $(this).parent().find("ul li span i").removeClass("fa-folder");
+                        $(this).find("i").removeClass("fa-folder");
+                    } else {
+                        $(this).parent().find("ul").addClass("activeSubMenu");
+                        $(this).parent().find("ul li span i").addClass("fa-folder-open");
+                        $(this).find("i").addClass("fa-folder-open");
+                    }
+                }
+            });
+        </script>
+    @endpush
 @endsection

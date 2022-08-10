@@ -13,12 +13,13 @@ class CreateCategoryPostsTable extends Migration
      */
     public function up()
     {
-        Schema::create('category_posts', function (Blueprint $table) {
+        Schema::create('category_post', function (Blueprint $table) {
             $table->integer('category_id')->unsigned();
             $table->integer('post_id')->unsigned();
             $table->primary(['category_id', 'post_id']);
             $table->foreign('category_id')->references('id')->on('categories')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('post_id')->references('id')->on('posts')->onUpdate('cascade')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 
