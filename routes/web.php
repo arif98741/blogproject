@@ -1,9 +1,8 @@
 <?php
 
 use App\Models\Post;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use NagadApi\Base;
-use NagadApi\Helper;
 
 Route::get('/', 'HomeController@index');
 
@@ -20,7 +19,7 @@ Route::group(
         'namespace' => 'Admin',
         'as' => 'admin.',
         'middleware' => 'auth',
-    ], function () {
+    ], static function () {
 
     Route::get('dashboard', 'AdminController@dashboard')->name('dashboard');
     Route::resource('post', 'PostController')->except(['show']);
@@ -30,7 +29,7 @@ Route::group(
 });
 
 Route::get('blog/view', function () {
-    $data['blog'] = Post::orderBy('id','desc')->limit(1)->first();
+    $data['blog'] = Post::orderBy('id', 'desc')->limit(1)->first();
     return view('welcome')->with($data);
 });
 
