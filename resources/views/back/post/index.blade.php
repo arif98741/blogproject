@@ -27,6 +27,7 @@
                                 <th>#</th>
                                 <th> Post Name</th>
                                 <th>Image</th>
+                                <th>Author</th>
                                 <th>Description</th>
                                 <th>Status</th>
                                 <th>Created_at</th>
@@ -43,13 +44,10 @@
                                     <td><img style="height: 100px; width: 100px;"
                                              src="{{ asset($post->thumbnail_image) }}" alt=""></td>
 
+                                    <td>{{ $post->user->name }}</td>
                                     <td>{{ $post->meta_title }}  </td>
                                     <td>
-                                        @if($post->status == 1)
-                                            <i class="ti-check menu-icon text-center"></i> &nbsp; Active
-                                        @else
-                                            <i class="ti-close menu-icon text-center"></i> &nbsp; Inactive
-                                        @endif
+                                        <label for="" class="badge badge-success"> {{ $post->status }}</label>&nbsp;
                                     </td>
                                     <td>
                                         {{ date('d-m-Y',strtotime( $post->created_at )) }}

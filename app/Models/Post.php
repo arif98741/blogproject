@@ -13,23 +13,14 @@ class Post extends Model
     /**
      * @var string[]
      */
-    protected $fillable = [
-        'title',
-        'description',
-        'feature_image',
-        'thumbnail_image',
-        'meta_title',
-        'meta_description',
-        'meta_keywords',
-        'status',
-    ];
+    protected $guarded = [];
 
     /**
      * @return BelongsToMany
      */
     public function categories()
     {
-      //  return $this->belongsToMany(Category::class, 'category_post');
+        //  return $this->belongsToMany(Category::class, 'category_post');
     }
 
     /**
@@ -42,6 +33,6 @@ class Post extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->withDefault();
     }
 }

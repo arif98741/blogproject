@@ -23,10 +23,10 @@
     <div class="container-fluid">
         <div class="card">
             <div class="card-body">
-                <form id="postFormSubmit" class="forms-sample" action="{{ route('admin.post.store') }}"
+                <form id="postFormSubmit" class="forms-sample" action="{{ route('admin.post.update',$post->id) }}"
                       enctype="multipart/form-data" method="POST">
                     @csrf
-                    @method('post')
+                    @method('put')
 
                     <div class="row">
                         <div class="col-md-9">

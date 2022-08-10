@@ -33,6 +33,7 @@ class PostController extends Controller
             'posts' => Post::with(['user'])->orderBy('id', 'desc')->paginate(20),
             'title' => 'Post List',
         ];
+
         return view('back.post.index')->with($data);
     }
 
@@ -118,7 +119,7 @@ class PostController extends Controller
             'post_tags' => PostTag::where('post_id', $post->id)->get()->pluck('tag_id')->toArray(),
             'post_categories' => CategoryPost::where('post_id', $post->id)->get()->pluck('category_id')->toArray(),
             'post' => $post,
-            'title' => 'Edit Post - '.$post->title,
+            'title' => 'Edit Post - ' . $post->title,
         ];
 
         return view('back.post.edit')->with($data);
@@ -157,10 +158,19 @@ class PostController extends Controller
         }
 
         if ($post->update($data)) {
+
+            CategoryPost::where('post_id', $post->id)->delete();
+            PostTag::where('post_id', $post->id)->delete();
+
             foreach ($request->categories_id as $category) {
-                $cats ['category_id'] = $category;
-                $cats['post_id'] = $post->id;
-                CategoryPost::create($cats);
+                $blog_cats ['category_id'] = $category;
+                $blog_cats['post_id'] = $post->id;
+                CategoryPost::create($blog_cats);
+            }
+            foreach ($request->tags as $tag) {
+                $blog_tags ['tag_id'] = $tag;
+                $blog_tags['post_id'] = $post->id;
+                PostTag::create($blog_tags);
             }
             AppFacade::generateActivityLog('posts', 'update', $post->id);
 
@@ -174,6 +184,11 @@ class PostController extends Controller
             'type' => 'error',
             'message' => 'Post failed to update',
         ])->with($data);
+    }
+
+    public function destroy()
+    {
+
     }
 
 }
