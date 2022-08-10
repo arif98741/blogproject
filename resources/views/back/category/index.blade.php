@@ -87,7 +87,7 @@
                         }
                     </style>
 
-                    <ul class="treeRoot">
+                    <ul class="treeRoot d-none">
                         <li class="hasSubMenu"><span>Root</span>
                             <ul class="activeSubMenu">
                                 <li class="hasSubMenu"><span><i class="fa fa-folder"></i>&nbsp;Branch1</span>
@@ -155,7 +155,7 @@
                     </ul>
                     {{--tree structure end--}}
 
-                    <div class="table-responsive pt-3 d-none">
+                    <div class="table-responsive pt-3 ">
                         <table class="table table-bordered mb-4">
                             <thead>
                             <tr>

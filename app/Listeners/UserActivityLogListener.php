@@ -34,7 +34,7 @@ class UserActivityLogListener
      */
     public function handle(UserActivityLogEvent $eventData): bool
     {
-      
+
         $current_timestamp = Carbon::now()->toDateTimeString();
 
         return DB::table('activity_logs')->insert(

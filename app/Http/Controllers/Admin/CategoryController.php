@@ -8,7 +8,6 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
 use Validator;
 
@@ -24,7 +23,7 @@ class CategoryController extends Controller
 
         $data = [
             //'categories' => Category::orderBy('category_name')->get()
-            'categories' =>   Category::categoryTree()
+            'categories' => Category::categoryTree()
         ];
         return view('back.category.index')->with($data);
     }
