@@ -1,11 +1,12 @@
 <?php
+
 if (!function_exists('get_current_route')) {
     /**
-     * @return mixed
+     * @return string|null
      */
-    function get_current_route()
+    function get_current_route(): ?string
     {
-        return Request::route()->getName();
+        return request()->route()->getName();
     }
 }
 
@@ -13,7 +14,7 @@ if (!function_exists('get_current_url')) {
     /**
      * @return string
      */
-    function get_current_url()
+    function get_current_url(): string
     {
         return url()->current();
     }

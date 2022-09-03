@@ -33,6 +33,7 @@
                                 <th>Tags</th>
                                 <th>Status</th>
                                 <th>Created_at</th>
+                                <th>Deleted</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -92,18 +93,34 @@
                                     <td>
                                         {{ date('d-m-Y',strtotime( $post->created_at )) }}
                                     </td>
-                                    <td><a href="{{ route('admin.post.edit',$post->id) }}"
-                                           class="btn-sm btn btn-primary"><i class="fa fa-pencil-alt"></i></a>
+                                    <td>
+                                        @if($post->deleted_at !=null)
+                                            <span class="text-green text-center d-block m-0"><i class="fa fa-check"></i></span>
+                                            <br>
+                                            <span
+                                                class="m-0">  {{ date('d-m-Y',strtotime( $post->deleted_at )) }}</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($post->deleted_at == null)
+                                            <a href="{{ route('admin.post.edit',$post->id) }}"
+                                               class="btn-sm btn btn-primary"><i class="fa fa-pencil-alt"></i></a>
 
-                                        <form style="display: inline-block" class="d-none"
-                                              action="{{ route('admin.post.destroy',$post->id) }}"
-                                              method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button onclick="return(confirm('are you sure to delete?'))"
-                                                    class="btn btn-danger btn-sm" type="submit"><i
-                                                    class="fa fa-trash-alt"></i></button>
-                                        </form>
+                                            <form style="display: inline-block" class=""
+                                                  action="{{ route('admin.post.destroy',$post->id) }}"
+                                                  method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button onclick="return(confirm('are you sure to delete? after delete this will gone to trash and you can restore it again'))"
+                                                        class="btn btn-danger btn-sm" type="submit"><i
+                                                        class="fa fa-trash-alt"></i></button>
+                                            </form>
+                                        @else
+
+                                            <a class="btn btn-sm btn-info"
+                                               href="{{ route('admin.post.restore',$post->id) }}"><i
+                                                    class="fa fa-undo"></i>&nbsp;Restore</a>
+                                        @endif
 
                                     </td>
                                 </tr>

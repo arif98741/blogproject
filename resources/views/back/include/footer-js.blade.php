@@ -27,20 +27,22 @@
 @stack('extra-script')
 <script type="text/javascript">
 
-    const type = "{{ Session::get('alert-type') }}";
+    @if(session()->has('alert'))
+    @php
+        $alert = session()->get('alert');
+        $alertType = $alert['type'];
+        $alertMessage = $alert['message'];
+    @endphp
 
-    switch (type) {
+    @if($alertType == 'success')
+    toastr.success('{{ $alertMessage }}');
+    @endif
+    @if($alertType == 'warning')
+    toastr.warning('{{ $alertMessage }}');
+    @endif
+    @if($alertType == 'error')
+    toastr.error('{{ $alertMessage }}');
+    @endif
 
-        case 'warning':
-            toastr.warning("{{ Session::get('message') }}");
-            break;
-
-        case 'success':
-            toastr.success("{{ Session::get('message') }}");
-            break;
-
-        case 'error':
-            toastr.error("{{ Session::get('message') }}");
-            break;
-    }
+    @endif
 </script>

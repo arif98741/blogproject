@@ -17,14 +17,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Admin\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -35,14 +34,14 @@ class PermissionController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return void
      */
-    function __construct()
+    public function __construct()
     {
-        //$this->middleware('permission:role-list|role-create|role-edit|role-delete|add category', ['only' => ['index', 'create', 'store']]);
-        //$this->middleware('permission:role-create', ['only' => ['create','store']]);
-        //$this->middleware('permission:role-edit', ['only' => ['edit','update']]);
-        //$this->middleware('permission:role-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:role-list|role-create|role-edit|role-delete|add category', ['only' => ['index', 'create', 'store']]);
+        $this->middleware('permission:role-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:role-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:role-delete', ['only' => ['destroy']]);
     }
 
     /**
@@ -103,7 +102,7 @@ class PermissionController extends Controller
      * Display the specified resource.
      *
      * @param int $id
-     * @return Response
+     * @return Application|Factory|View
      */
     public function show($id)
     {
@@ -124,9 +123,8 @@ class PermissionController extends Controller
      * @param int $id
      * @return Application|Factory|View
      */
-    public function edit($id)
+    public function edit(int $id)
     {
-
         $data = [
             'role' => Role::find($id),
             'permission' => Permission::get(),
@@ -146,7 +144,7 @@ class PermissionController extends Controller
      * @return RedirectResponse
      * @throws ValidationException
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id)
     {
         $this->validate($request, [
             'name' => 'required',

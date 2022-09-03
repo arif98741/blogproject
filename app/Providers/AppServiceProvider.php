@@ -19,6 +19,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind('BlogAppFacade', function () {
             return new AppSetting;
         });
+
+
+        if ($this->app->isLocal()) {
+            $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
+        }
     }
 
     /**

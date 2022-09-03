@@ -23,6 +23,7 @@ Route::group(
 
     Route::get('dashboard', 'AdminController@dashboard')->name('dashboard');
     Route::resource('post', 'PostController')->except(['show']);
+    Route::get('post/restore/{id}', 'PostController@restore')->name('post.restore');
     Route::resource('category', 'CategoryController')->except(['show']);
     Route::resource('tag', 'TagController')->except(['show']);
     Route::get('dashboard', 'AdminController@dashboard')->name('dashboard');
@@ -31,6 +32,12 @@ Route::group(
 Route::get('blog/view', function () {
     $data['blog'] = Post::orderBy('id', 'desc')->limit(1)->first();
     return view('welcome')->with($data);
+});
+
+
+Route::get('/loggout', function () {
+    Auth::logout();
+    return redirect('login');
 });
 
 

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddColumnToPostTable extends Migration
+class AddSoftDeleteToPostTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddColumnToPostTable extends Migration
      */
     public function up()
     {
-        Schema::table('posts', static function (Blueprint $table) {
-            $table->text('description')->after('feature_image')->nullable();
+        Schema::table('posts', function (Blueprint $table) {
+            $table->softDeletes()->after('updated_by');
         });
     }
 
@@ -23,10 +23,10 @@ class AddColumnToPostTable extends Migration
      *
      * @return void
      */
-    public function down(): void
+    public function down()
     {
         Schema::table('posts', function (Blueprint $table) {
-
+            //
         });
     }
 }

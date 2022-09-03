@@ -20,7 +20,7 @@ class TagController extends Controller
     public function index()
     {
         $data = [
-            'tags' => Tag::with(['posts'])->orderBy('tag_name')->get()
+            'tags' => Tag::with(['posts'])->orderBy('tag_name')->paginate(10)
         ];
 
         return view('back.tag.index')->with($data);
@@ -47,7 +47,6 @@ class TagController extends Controller
         ];
         return view('back.tag.edit')->with($data);
     }
-
 
     /**
      * @param Request $request
@@ -87,7 +86,9 @@ class TagController extends Controller
     }
 
     /**
-     * @return void
+     * @param Request $request
+     * @param Tag $tag
+     * @return JsonResponse
      */
     public function update(Request $request, Tag $tag)
     {
@@ -117,7 +118,6 @@ class TagController extends Controller
                 ]
             ]
         ), 400);
-
     }
 
     /**

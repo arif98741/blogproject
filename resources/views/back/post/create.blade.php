@@ -261,7 +261,7 @@
 
 
                     <button type="submit" class="btn btn-success btn-save mr-2">Save</button>
-                    <button class="btn btn-info">Back</button>
+                    <a href="{{ route('admin.post.index') }}" class="btn btn-info">Back</a>
                 </form>
 
             </div>

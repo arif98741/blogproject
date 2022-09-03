@@ -36,7 +36,9 @@
                                     <td>
                                         {{ ++$key }}
                                     </td>
-                                    <td>{{ $tag->tag_name }}</td>
+                                    <td>
+                                        <label for="" class="badge badge-info"><i class="fa fa-tag"></i>&nbsp; {{ $tag->tag_name }}</label>
+                                    </td>
 
                                     <td>
                                         @if($tag->status == 1)
@@ -68,6 +70,7 @@
 
                             </tbody>
                         </table>
+                        {{ $tags->links() }}
                     </div>
                 </div>
             </div>

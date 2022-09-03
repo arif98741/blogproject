@@ -11,6 +11,7 @@ use App\Models\CategoryPost;
 use App\Models\Post;
 use App\Models\PostTag;
 use App\Models\Tag;
+use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -30,7 +31,10 @@ class PostController extends Controller
     public function index()
     {
         $data = [
-            'posts' => Post::with(['user', 'tags', 'categories'])->orderBy('id', 'desc')->paginate(20),
+            'posts' => Post::with(['user', 'tags', 'categories'])
+                ->withTrashed()
+                ->orderBy('id', 'desc')
+                ->paginate(20),
             'title' => 'Post List',
         ];
 
@@ -73,6 +77,7 @@ class PostController extends Controller
         ];
         $data = $this->validate($request, $rules);
         $data['user_id'] = $this->getUserId();
+        $data['created_by'] = $this->getUserId();
 
 
         if ($request->hasFile('feature_image')) {
@@ -91,13 +96,13 @@ class PostController extends Controller
             return redirect()->route('admin.post.index')->with('alert', [
                 'type' => 'success',
                 'message' => 'Post Saved successfully',
-            ])->with($data);
+            ]);
         }
 
         return redirect()->route('admin.post.index')->with('alert', [
             'type' => 'error',
             'message' => 'Post failed to insert',
-        ])->with($data);
+        ]);
     }
 
     /**
@@ -175,8 +180,48 @@ class PostController extends Controller
         ])->with($data);
     }
 
-    public function destroy()
+    /**
+     * @param Request $request
+     * @param Post $post
+     * @return RedirectResponse
+     */
+    public function destroy(Request $request, Post $post): RedirectResponse
     {
+        $post->status = 'deleted';
+        $post->save();
+        $post->delete();
+
+        AppFacade::generateActivityLog('posts', 'delete', $post->id);
+        return redirect()->route('admin.post.index')->with('alert', [
+            'type' => 'success',
+            'message' => 'Post deleted successfully. But it is trash',
+        ]);
+    }
+
+    /**
+     * @param Request $request
+     * @param $id
+     * @return RedirectResponse
+     */
+    public function restore(Request $request, $id): RedirectResponse
+    {
+        try {
+            Post::onlyTrashed()->where('id', $id)->restore();
+            $post = Post::find($id);
+            $post->status = 'published';
+            $post->save();
+            AppFacade::generateActivityLog('posts', 'restore', $post->id);
+            return redirect()->route('admin.post.index')->with('alert', [
+                'type' => 'success',
+                'message' => 'Post successfully restored',
+            ]);
+        } catch (Exception $e) {
+            return redirect()->route('admin.post.index')->with('alert', [
+                'type' => 'error',
+                'message' => 'Failed to restore post ' . $e->getMessage(),
+            ]);
+        }
+
 
     }
 
