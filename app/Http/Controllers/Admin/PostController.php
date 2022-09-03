@@ -63,6 +63,7 @@ class PostController extends Controller
     {
         $rules = [
             'title' => 'required|min:3|unique:posts',
+            'slug' => 'required|min:3|unique:posts',
             'description' => 'required',
             'categories_id' => 'required',
             'status' => 'required',
@@ -124,9 +125,9 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-
         $rules = [
             'title' => 'required|min:3',
+            'slug' => 'required|min:3',
             'description' => 'required',
             'categories_id' => 'required',
             'status' => 'required',
@@ -186,15 +187,20 @@ class PostController extends Controller
      */
     protected function syncCategoryTag(Request $request, Post $post): void
     {
-        foreach ($request->categories_id as $category) {
-            $blog_cats ['category_id'] = $category;
-            $blog_cats['post_id'] = $post->id;
-            CategoryPost::create($blog_cats);
+        if ($request->has('categories_id')) {
+            foreach ($request->categories_id as $category) {
+                $blog_cats ['category_id'] = $category;
+                $blog_cats['post_id'] = $post->id;
+                CategoryPost::create($blog_cats);
+            }
         }
-        foreach ($request->tags as $tag) {
-            $blog_tags ['tag_id'] = $tag;
-            $blog_tags['post_id'] = $post->id;
-            PostTag::create($blog_tags);
+
+        if ($request->has('tags')) {
+            foreach ($request->tags as $tag) {
+                $blog_tags ['tag_id'] = $tag;
+                $blog_tags['post_id'] = $post->id;
+                PostTag::create($blog_tags);
+            }
         }
     }
 

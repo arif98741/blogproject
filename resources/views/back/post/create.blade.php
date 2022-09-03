@@ -31,7 +31,7 @@
                     <div class="row">
                         <div class="col-md-9">
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Title</label>
                                         <input name="title" type="text" id="title" class="form-control"
@@ -40,6 +40,19 @@
                                         @if ($errors->has('title'))
                                             <span class="help-block">
                                             <p class="text-red">{{ $errors->first('title') }}</p> </span>
+                                        @endif
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Slug</label>
+                                        <input name="slug" type="text" id="slug" class="form-control"
+                                               value="{{ old('slug') }}"
+                                               placeholder="slug">
+                                        @if ($errors->has('slug'))
+                                            <span class="help-block">
+                                            <p class="text-red">{{ $errors->first('slug') }}</p> </span>
                                         @endif
                                     </div>
 
@@ -273,7 +286,7 @@
             }
 
             .select2-container--default .select2-selection--multiple .select2-selection__choice {
-                 background-color: #007bff;
+                background-color: #007bff;
 
             }
         </style>
@@ -387,6 +400,17 @@
                          }
                      });*/
                 });
+
+
+                $('#title').keyup(function () {
+                    let text = $(this).val();
+                    text = text.toLowerCase()
+                        .replace(/ /g,'-')
+                        .replace(/[-]+/g, '-')
+                        .replace(/[^\w-]+/g,'');
+                    $("#slug").val(text);
+                });
+
             });
         </script>
     @endpush

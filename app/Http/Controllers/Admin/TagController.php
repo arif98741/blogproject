@@ -7,6 +7,7 @@ use App\Models\Tag;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
@@ -19,8 +20,9 @@ class TagController extends Controller
     public function index()
     {
         $data = [
-            'tags' => Tag::orderBy('tag_name')->get()
+            'tags' => Tag::with(['posts'])->orderBy('tag_name')->get()
         ];
+
         return view('back.tag.index')->with($data);
     }
 
@@ -49,7 +51,7 @@ class TagController extends Controller
 
     /**
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function store(Request $request)
     {

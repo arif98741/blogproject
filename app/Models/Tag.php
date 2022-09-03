@@ -10,7 +10,13 @@ class Tag extends Model
 {
     use HasFactory;
 
+    /**
+     * @var string
+     */
     protected $table = 'tags';
+    /**
+     * @var string[]
+     */
     protected $fillable = [
         'tag_name',
     ];
@@ -18,8 +24,8 @@ class Tag extends Model
     /**
      * @return BelongsToMany
      */
-    public function posts()
+    public function posts(): BelongsToMany
     {
-        return $this->belongsToMany(Post::class);
+        return $this->belongsToMany(Post::class, 'post_tags');
     }
 }

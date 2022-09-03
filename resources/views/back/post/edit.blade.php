@@ -21,7 +21,7 @@
         </div>
     </section>
     <div class="container-fluid">
-{{--        @dd($errors)--}}
+        {{--        @dd($errors)--}}
         <div class="card">
             <div class="card-body">
                 <form id="postFormSubmit" class="forms-sample" action="{{ route('admin.post.update',$post->id) }}"
@@ -32,7 +32,7 @@
                     <div class="row">
                         <div class="col-md-9">
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Title</label>
                                         <input name="title" type="text" id="title" class="form-control"
@@ -41,6 +41,19 @@
                                         @if ($errors->has('title'))
                                             <span class="help-block">
                                             <p class="text-red">{{ $errors->first('title') }}</p> </span>
+                                        @endif
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Slug</label>
+                                        <input name="slug" type="text" id="slug" readonly class="form-control"
+                                               value="{{ (!empty(old('title')) ? old('title'): $post->title) }}"
+                                               placeholder="slug">
+                                        @if ($errors->has('slug'))
+                                            <span class="help-block">
+                                            <p class="text-red">{{ $errors->first('slug') }}</p> </span>
                                         @endif
                                     </div>
 
@@ -54,7 +67,8 @@
                                         <label for="">Feature Image</label>
                                         <input type="file" id="feature_image" name="feature_image">
                                         <br>
-                                        <img src="{{ asset($post->thumbnail_image) }}" style="width: 100px; height: 100px" alt="">
+                                        <img src="{{ asset($post->thumbnail_image) }}"
+                                             style="width: 100px; height: 100px" alt="">
                                     </div>
                                 </div>
                             </div>
@@ -229,7 +243,7 @@
                                             @foreach($post_statuses as $key=> $post_status)
 
                                                 <option value="{{ $post_status }}"
-                                                        @if($post_status == 'published') selected @endif>{{ $post_status }}</option>
+                                                        @if($post_status == $post->status) selected @endif>{{ $post_status }}</option>
                                             @endforeach
 
                                         </select>
@@ -255,7 +269,7 @@
                     </div>
 
 
-                    <button type="submit" class="btn btn-success btn-save mr-2">Save</button>
+                    <button type="submit" class="btn btn-success btn-save mr-2">Update</button>
                     <button class="btn btn-info">Back</button>
                 </form>
 
@@ -364,7 +378,7 @@
                     let formData = new FormData(this);
 
 
-                    $('.btn-save').text('Saving');
+                    $('.btn-save').text('Updating');
                     /* $.ajax({
                          type: "POST",
                          url: url,
