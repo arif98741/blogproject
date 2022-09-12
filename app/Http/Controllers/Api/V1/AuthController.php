@@ -20,7 +20,6 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Facades\AppFacade;
 use App\Helpers\DataHelper;
-use App\Helpers\ImageHelper;
 use App\Models\Otp;
 use App\Models\User;
 use Carbon\Carbon;
@@ -136,7 +135,6 @@ class AuthController extends BaseController
         $input['role_id'] = $request->role;
 
 
-
         if ($request->role === 4) {
 
             $validator = Validator::make($request->all(), [
@@ -158,7 +156,7 @@ class AuthController extends BaseController
 
         }
 
-      
+
         $user = User::create($input);
         //  $success['token'] = $user->createToken('MyApp')->accessToken; //this will be used on once
         if ($user) {
@@ -366,7 +364,7 @@ class AuthController extends BaseController
     /**
      * Forgot Password
      * @param Request $request
-     * @return JsonResponse|void
+     * @return JsonResponse
      */
     public function forgotPassword(Request $request)
     {

@@ -15,7 +15,14 @@ class CreatePagesTable extends Migration
     {
         Schema::create('pages', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();
+        });
+
+        Schema::table('pages', function (Blueprint $table) {
+            $table->foreign('created_by')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
+            $table->foreign('updated_by')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
         });
     }
 

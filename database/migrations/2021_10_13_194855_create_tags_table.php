@@ -14,9 +14,18 @@ class CreateTagsTable extends Migration
     public function up()
     {
         Schema::create('tags', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('tag_name', 50)->unique();
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();
+        });
+
+
+        Schema::table('tags', function (Blueprint $table) {
+
+            $table->foreign('created_by')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
+            $table->foreign('updated_by')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
         });
     }
 
