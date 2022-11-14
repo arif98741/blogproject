@@ -30,6 +30,7 @@ class PostController extends Controller
      */
     public function index()
     {
+
         $data = [
             'posts' => Post::with(['user', 'tags', 'categories'])
                 ->withTrashed()
@@ -153,9 +154,7 @@ class PostController extends Controller
             if (File::exists($post->thumbnail_image)) {
                 File::delete($post->thumbnail_image);
             }
-
             $uploadFile = ImageHelper::imageUpload($request, 'feature_image', 'post', 'post', true, 500, 450);
-
             $data['feature_image'] = $uploadFile['file_path'];
             $data['thumbnail_image'] = $uploadFile['thumb_path'];
         }
@@ -232,6 +231,7 @@ class PostController extends Controller
      */
     protected function syncCategoryTag(Request $request, Post $post): void
     {
+
         if ($request->has('categories_id')) {
             foreach ($request->categories_id as $category) {
                 $blog_cats ['category_id'] = $category;

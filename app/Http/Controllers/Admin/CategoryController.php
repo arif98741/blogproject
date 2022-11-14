@@ -19,12 +19,16 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //return Category::categoryTree();
 
         $data = [
             //'categories' => Category::orderBy('category_name')->get()
-            'categories' => Category::categoryTree()
+            //     'categories' => Category::categoryTree()
+            'categories' => Category::with('childs')
+                ->orderBy('parent_id','asc')
+                ->get(),
         ];
+
+
         return view('back.category.index')->with($data);
     }
 

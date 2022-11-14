@@ -126,18 +126,18 @@
                                     @foreach($categories as $key1=> $category)
                                         <li>
                                             <div class="form-group">
-                                                <input type="checkbox" value="{{ $category->id }}"
+                                                <input type="checkbox" value="{{ $category[0]->id }}"
                                                        name="categories_id[]"
                                                        class="form-check-input" id="exampleCheck1">
                                                 <label class="form-check-label"
-                                                       for="exampleCheck1">{{ $category->category_name }}</label>
+                                                       for="exampleCheck1">{{ $category[0]->category_name }}</label>
                                             </div>
                                         </li>
 
-                                        @if(property_exists($category,'childs'))
+                                        @if(property_exists($category[0],'childs'))
 
                                             <ul>
-                                                @foreach($category->childs as $key2=> $secondChild)
+                                                @foreach($category[0]->childs as $key2=> $secondChild)
                                                     <li>
                                                         <div class="form-group">
                                                             <input type="checkbox" value="{{ $secondChild->id }}"
