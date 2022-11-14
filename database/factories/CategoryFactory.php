@@ -22,7 +22,8 @@ class CategoryFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'category_name' => ucfirst($this->faker->text(15)),
+            'parent_id' => (Category::count() > 0) ? Category::all()->random() : null,
         ];
     }
 }
