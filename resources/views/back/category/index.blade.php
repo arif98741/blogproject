@@ -170,17 +170,23 @@
 
                             @foreach($categories as $key=> $category)
 
+                                @if($key == 0)
+                                    @php continue; @endphp
+                                @endif
+
                                 @php
                                     $key = ++$key;
                                 @endphp
 
                                 <tr>
 
-                                    <td>{{ $category->category_name }}
+                                    <td><strong>{{ $category->category_name }}</strong>
                                     </td>
                                     <td><img src="{{ asset($category->imgpath) }}" alt=""></td>
                                     <td>{{ \Carbon\Carbon::make($category->created_at)->format('h:iA, Y-m-d') }}</td>
-                                    <td class="text-center"><span class="badge badge-success">Approved</span></td>
+                                    <td class="text-center">
+                                        <span class="badge badge-success">Approved</span>
+                                    </td>
                                     <td class="text-center">
                                         <div class="dropdown custom-dropdown">
                                             <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink1"
@@ -204,7 +210,8 @@
 
                                     </td>
                                 </tr>
-                                @if(property_exists($category,'childs'))
+
+                                @if($category->count() >0)
 
                                     @foreach($category->childs as $childCatKey => $childCat)
 
@@ -215,7 +222,9 @@
                                         @endphp
                                         <tr>
 
-                                            <td>{{ $category->category_name }}/{{ $childCat->category_name }}</td>
+                                            <td>
+                                                <strong>{{ $category->category_name }}</strong>/<strong>{{ $childCat->category_name }}</strong>
+                                            </td>
                                             <td><img src="{{ asset($childCat->imgpath) }}" alt=""></td>
                                             <td>{{ \Carbon\Carbon::make($childCat->created_at)->format('h:iA, Y-m-d') }}</td>
                                             <td class="text-center"><span
@@ -250,7 +259,8 @@
                                             </td>
                                         </tr>
 
-                                        @if(property_exists($childCat,'childs'))
+
+                                        @if($childCat->count() >0)
 
                                             @foreach($childCat->childs as $secondChildKey => $secondChild)
 
@@ -262,9 +272,9 @@
                                                 @endphp
                                                 <tr>
 
-                                                    <td>{{ $category->category_name }}
-                                                        /{{ $childCat->category_name }}
-                                                        /{{ $secondChild->category_name }}</td>
+                                                    <td><strong>{{ $category->category_name }}</strong>
+                                                        /<strong>{{ $childCat->category_name }}</strong>
+                                                        /<strong>{{ $secondChild->category_name }}</strong></td>
                                                     <td><img src="{{ asset($secondChild->imgpath) }}" alt=""></td>
                                                     <td>{{ \Carbon\Carbon::make($secondChild->created_at)->format('h:iA, Y-m-d') }}</td>
                                                     <td class="text-center"><span
@@ -315,14 +325,12 @@
     <script>
 
         $('.delete-user').click(function (e) {
-
             e.preventDefault() // Don't post the form, unless confirmed
             if (confirm('Are you sure?')) {
                 // Post the form
                 $(e.target).closest('form').submit() // Post the surrounding form
             }
         });
-
 
     </script>
     @push('extra-script')
