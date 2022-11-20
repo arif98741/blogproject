@@ -29,6 +29,35 @@ body {
     border-radius: 4px !important;
 
 }
+
 .select2-container--default .select2-selection--multiple .select2-selection__choice {
     background-color: #08020c !important;
 }
+
+.card {
+    border-radius: 0px;
+}
+.small-box {
+    border-radius: 0px;
+    box-shadow: 0 0 0 0;
+
+}
+
+/** sidebar customization */
+.main-sidebar {
+    height: 100vh;
+    overflow-y: hidden;
+    z-index: 1038;
+    background-color: #001326ed;
+}
+
+.navbar-white {
+    background-color: #122435;
+    /* color: #1f2d3d; */
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: #fff;
+}
+
+

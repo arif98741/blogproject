@@ -175,6 +175,64 @@
                         </li>
                     </ul>
                 </li>
+                <li class="nav-item @if(route_exist_in_sidebar([])) menu-is-opening menu-open @else @endif">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-ad"></i>
+                        <p>
+                            @lang('Advertisement ')
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview" @if(route_exist_in_sidebar([])) style="display: block" @else @endif>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="far fa-plus nav-icon"></i>
+                                <p>@lang('Add Tag')</p>
+
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+                <li class="nav-item @if(route_exist_in_sidebar([])) menu-is-opening menu-open @else @endif">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-users"></i>
+                        <p>
+                            @lang('Authors')
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview" @if(route_exist_in_sidebar([])) style="display: block" @else @endif>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="far fa-plus nav-icon"></i>
+                                <p>@lang('Add Tag')</p>
+
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+                <li class="nav-item @if(route_exist_in_sidebar([])) menu-is-opening menu-open @else @endif">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-cogs"></i>
+                        <p>
+                            @lang('Setting')
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview" @if(route_exist_in_sidebar([])) style="display: block" @else @endif>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="far fa-plus nav-icon"></i>
+                                <p>@lang('Add Tag')</p>
+
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+
                 <li class="nav-item">
                     <a href="{{ url('/loggout') }}" class="nav-link">
                         <i class="nav-icon fas fa-sign-out-alt"></i>
