@@ -38,6 +38,41 @@
                 @php
 
                     $postRoutes = [
+                      'admin.media.create',
+                      'admin.media.edit',
+                      'admin.media.index',
+                    ];
+
+                @endphp
+                <li class="nav-item @if(route_exist_in_sidebar($postRoutes)) menu-is-opening menu-open @else @endif">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-images"></i>
+                        <p>
+                            @lang('Media')
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview"
+                        @if(route_exist_in_sidebar($postRoutes)) style="display: block" @else @endif>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="far fa-plus nav-icon"></i>
+                                <p>@lang('Add Media')</p>
+
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="far fa-plus nav-icon"></i>
+                                <p>@lang('Media List')</p>
+
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                @php
+
+                    $postRoutes = [
                       'admin.post.create',
                       'admin.post.edit',
                       'admin.post.index',
@@ -70,6 +105,8 @@
                         </li>
                     </ul>
                 </li>
+
+
                 @php
 
                     $categoryRoutes = [
@@ -139,7 +176,7 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ url('/logout') }}" class="nav-link">
+                    <a href="{{ url('/loggout') }}" class="nav-link">
                         <i class="nav-icon fas fa-sign-out-alt"></i>
                         <p>
                             @lang('Logout')
