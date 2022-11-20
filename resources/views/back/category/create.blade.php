@@ -9,6 +9,7 @@
                         <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}"><i
                                     class="ti-home"></i>&nbsp;Home</a>
                         </li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.category.index') }}">@lang('Category') </a></li>
                         <li class="breadcrumb-item active">Add Category</li>
                     </ol>
                 </div>
