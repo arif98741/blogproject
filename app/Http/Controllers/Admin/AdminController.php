@@ -10,6 +10,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\DB;
 
+
 class AdminController extends Controller
 {
     /**
@@ -19,7 +20,7 @@ class AdminController extends Controller
     {
         $data = [
             'post_count' => Post::select('status', DB::raw('count(id) as total'))
-                ->orderBy('status','desc')
+                ->orderBy('status', 'desc')
                 ->groupBy('status')
                 ->get(),
             'author' => User::count(),

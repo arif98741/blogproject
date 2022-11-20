@@ -36,7 +36,7 @@ class PostFactory extends Factory
             'meta_title' => ucfirst($this->faker->text(50)),
             'meta_description' => ucfirst($this->faker->text(100)),
             'meta_keywords' => ucfirst($this->faker->text(40)),
-            'status' => $this->faker->randomElement([0, 1]),
+            'status' => $this->faker->randomElement(config('app-config.post_status')),
         ];
     }
 }
