@@ -60,14 +60,29 @@
 
                             </div>
 
-                            <div class="row">
+<!--                            <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="">Feature Image</label>
                                         <input type="file" id="feature_image" name="feature_image">
                                     </div>
                                 </div>
+                            </div>-->
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="input-group">
+                               <span class="input-group-btn">
+                                 <a id="lfm_box" data-input="thumbnail" data-preview="holder" class="btn btn-primary" style="border-radius: 0px;">
+                                   <i class="fa fa-picture-o"></i> Feature image
+                                 </a>
+                               </span>
+                                        <input id="thumbnail" class="form-control" type="text" name="thumbnail_path">
+                                    </div>
+                                    <img id="holder" style="margin-top:15px;max-height:100px;">
+                                </div>
                             </div>
+
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
@@ -295,8 +310,11 @@
 
         <script src="{{ asset('assets/back/plugins/summernote/summernote-bs4.min.js')}}"></script>
         <script src="{{ asset('assets/back/plugins/select2/js/select2.full.min.js')}}"></script>
+        <script src="{{ asset('vendor/laravel-filemanager/js/stand-alone-button.js')}}"></script>
         <script>
             $(document).ready(function () {
+
+                $('#lfm_box').filemanager('image');
 
                 $('#tags').select2();
                 // Define function to open filemanager window
@@ -405,9 +423,9 @@
                 $('#title').keyup(function () {
                     let text = $(this).val();
                     text = text.toLowerCase()
-                        .replace(/ /g,'-')
+                        .replace(/ /g, '-')
                         .replace(/[-]+/g, '-')
-                        .replace(/[^\w-]+/g,'');
+                        .replace(/[^\w-]+/g, '');
                     $("#slug").val(text);
                 });
 
