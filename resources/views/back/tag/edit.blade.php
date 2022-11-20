@@ -29,19 +29,19 @@
                                     <label for="">Tag Title</label>
                                     <input name="tag_name"
                                            value="{{ (!empty(old('tag_name'))) ? old('tag_name') : $tag->tag_name }}"
-                                           id="tag_name"
+                                           id="tag_name" placeholder="@lang('write your tag here')"
                                            type="text" class="form-control">
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="">Image</label>
+                                    <label for="">@lang('Image')</label>
                                     <input type="file" name="image">
                                 </div>
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-success btn-save  mr-2">Save</button>
-                        <button class="btn btn-info ">Back</button>
+                        <button type="submit" class="btn btn-success btn-save  mr-2">@lang('Save')</button>
+                        <button class="btn btn-info ">@lang('Back')</button>
                     </form>
 
 
@@ -75,7 +75,7 @@
                         if (xhr.status === 200) {
                             toastr.success(data.success);
                             setTimeout(function () {
-                                 window.location.href = '{{ route('admin.tag.index') }}';
+                                window.location.href = '{{ route('admin.tag.index') }}';
                             }, 1000);
                         }
                     },

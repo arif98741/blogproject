@@ -44,14 +44,7 @@
     <a class="navbar-toggler collapsed border-0 px-1 py-2 m-0" data-toggle="collapse" data-target="#nav-buttons">
         <i class="fas fa-cog fa-fw"></i>
     </a>
-    <div class="collapse navbar-collapse flex-grow-0">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <input type="text" placeholder="search file here" class="form-control" style="height: 33px;
-    margin: 0 auto;" id="lfm_search_box">
-            </li>
-        </ul>
-    </div>
+
     <div class="collapse navbar-collapse flex-grow-0" id="nav-buttons">
         <ul class="navbar-nav">
 
@@ -93,6 +86,9 @@
     <div id="main">
         <div id="alerts"></div>
 
+        <nav aria-label="breadcrumb" class="mb-2">
+            <input type="text" placeholder="search file/folder here" class="form-control" id="lfm_search_box">
+        </nav>
         <nav aria-label="breadcrumb" class="d-none d-lg-block" id="breadcrumbs">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item invisible">Home</li>

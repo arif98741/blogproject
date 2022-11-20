@@ -26,20 +26,20 @@
                         <div class="row">
                             <div class="col-md-8">
                                 <div class="form-group">
-                                    <label for="">Tag Name</label>
-                                    <input name="tag_name" id="tag_name"
+                                    <label for="">@lang('Tag Name')</label>
+                                    <input name="tag_name" id="tag_name" placeholder="@lang('write your tag name here')"
                                            type="text" class="form-control">
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="">Image</label>
+                                    <label for="">@lang('Image')</label>
                                     <input type="file" name="image">
                                 </div>
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-success btn-save  mr-2">Save</button>
-                        <button class="btn btn-info ">Back</button>
+                        <button type="submit" class="btn btn-success btn-save  mr-2">@lang('Save')</button>
+                        <button class="btn btn-info ">@lang('Back')</button>
                     </form>
 
 

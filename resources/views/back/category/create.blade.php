@@ -7,15 +7,15 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-left">
                         <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}"><i
-                                    class="ti-home"></i>&nbsp;Home</a>
+                                    class="ti-home"></i>&nbsp;@lang('Home')</a>
                         </li>
                         <li class="breadcrumb-item"><a href="{{ route('admin.category.index') }}">@lang('Category') </a></li>
-                        <li class="breadcrumb-item active">Add Category</li>
+                        <li class="breadcrumb-item active">@lang('Add Category')</li>
                     </ol>
                 </div>
                 <div class="col-sm-6">
-                    <a href="{{ route('admin.category.index') }}" class="btn btn-primary btn-sm float-sm-right">Back to
-                        categories</a>
+                    <a href="{{ route('admin.category.index') }}" class="btn btn-primary btn-sm float-sm-right">@lang('Back to
+                        categories')</a>
                 </div>
             </div>
         </div>
@@ -32,13 +32,13 @@
                         <div class="row">
                             <div class="col-md-8">
                                 <div class="form-group">
-                                    <label for="">Category Title</label>
+                                    <label for="">@lang('Category Title')</label>
                                     <input name="category_name" id="category_name"
                                            type="text" class="form-control">
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="">Category Title</label>
+                                    <label for="">@lang('Category Thumbanil')</label>
                                     <input name="image" id="imgFile"
                                            type="file" class="form-control">
                                     <img id="imgPreview" style="width: 150px; height: 150px; " class="d-none mt-3"
@@ -47,8 +47,8 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-success btn-save  mr-2">Save</button>
-                        <button class="btn btn-info ">Back</button>
+                        <button type="submit" class="btn btn-success btn-save  mr-2">@lang('Save')</button>
+                        <button class="btn btn-info ">@lang('Back')</button>
                     </form>
 
 

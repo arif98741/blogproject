@@ -7,15 +7,15 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-left">
                         <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}"><i
-                                    class="ti-home"></i>&nbsp;Home</a>
+                                    class="ti-home"></i>&nbsp;@lang('Image')</a>
                         </li>
-                        <li class="breadcrumb-item "><a href="{{ route('admin.post.index') }}">Posts</a></li>
+                        <li class="breadcrumb-item "><a href="{{ route('admin.post.index') }}">@lang('Posts')</a></li>
                         <li class="breadcrumb-item active">{{ $title }}</li>
                     </ol>
                 </div>
                 <div class="col-sm-6">
-                    <a href="{{ route('admin.post.index') }}" class="btn btn-primary btn-sm float-sm-right">Back to
-                        Posts</a>
+                    <a href="{{ route('admin.post.index') }}" class="btn btn-primary btn-sm float-sm-right">@lang('Back to
+                        Posts')</a>
                 </div>
             </div>
         </div>
@@ -36,10 +36,10 @@
                                         <label>Title</label>
                                         <input name="title" type="text" id="title" class="form-control"
                                                value="{{ old('title') }}"
-                                               placeholder="Title">
+                                               placeholder="@lang('Title')">
                                         @if ($errors->has('title'))
                                             <span class="help-block">
-                                            <p class="text-red">{{ $errors->first('title') }}</p> </span>
+                                            <p class="text-red">{{ $errors->first('title') }}</p></span>
                                         @endif
                                     </div>
 
@@ -49,7 +49,7 @@
                                         <label>Slug</label>
                                         <input name="slug" type="text" id="slug" class="form-control"
                                                value="{{ old('slug') }}"
-                                               placeholder="slug">
+                                               placeholder="@lang('slug')">
                                         @if ($errors->has('slug'))
                                             <span class="help-block">
                                             <p class="text-red">{{ $errors->first('slug') }}</p> </span>
@@ -60,36 +60,13 @@
 
                             </div>
 
-<!--                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="">Feature Image</label>
-                                        <input type="file" id="feature_image" name="feature_image">
-                                    </div>
-                                </div>
-                            </div>-->
-
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="input-group">
-                               <span class="input-group-btn">
-                                 <a id="lfm_box" data-input="thumbnail" data-preview="holder" class="btn btn-primary" style="border-radius: 0px;">
-                                   <i class="fa fa-picture-o"></i> Feature image
-                                 </a>
-                               </span>
-                                        <input id="thumbnail" class="form-control" type="text" name="thumbnail_path">
-                                    </div>
-                                    <img id="holder" style="margin-top:15px;max-height:100px;">
-                                </div>
-                            </div>
-
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="exampleInputUsername1">Description</label>
+                                        <label for="exampleInputUsername1">@lang('Description')</label>
                                         <textarea name="description" id="summernote" cols="30" rows="5"
                                                   class="form-control"
-                                                  placeholder="Enter text here">{{ old('description') }}</textarea>
+                                                  placeholder="@lang('Enter text here')">{{ old('description') }}</textarea>
                                         @if ($errors->has('text'))
                                             <span class="help-block">
                                             <p
@@ -104,7 +81,7 @@
 
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="exampleInputUsername1">Meta Title</label>
+                                        <label for="exampleInputUsername1">@lang('Meta Title')</label>
                                         <input type="text" name="meta_title" id="meta_title"
                                                value="{{ old('meta_title') }}" class="form-control">
                                         @if ($errors->has('meta_title'))
@@ -115,7 +92,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="">Meta Keywords</label>
+                                        <label for="">@lang('Meta Keywords')</label>
                                         <input name="meta_keywords" value="{{ old('meta_keywords') }}"
                                                id="meta_keywords" cols="30" rows="2"
                                                class="form-control">
@@ -126,7 +103,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="">Meta Description</label>
+                                        <label for="">@lang('Meta Description')</label>
                                         <textarea name="meta_description" id="meta_description" cols="30" rows="2"
                                                   class="form-control"></textarea>
                                     </div>
@@ -136,7 +113,7 @@
                         <div class="col-md-3">
 
                             <div class="form-group">
-                                <label>Categories</label>
+                                <label>@lang('Categories')</label>
                                 <ul>
                                     @foreach($categories as $key1=> $category)
                                         <li>
@@ -224,7 +201,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label>Tags</label>
+                                        <label>@lang('Tags')</label>
                                         <select name="tags[]" class="form-control" id="tags" multiple>
                                             @foreach($tags as $key=> $tag)
                                                 <option value="{{ $tag->id }}">{{ $tag->tag_name }}</option>
@@ -241,7 +218,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Status</label>
+                                        <label>@lang('Status')</label>
                                         <select name="status" id="status" class="form-control">
                                             @foreach($post_statuses as $key=> $post_status)
 
@@ -258,7 +235,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Author</label>
+                                        <label>@lang('Author')</label>
 
                                         <select class="form-control" readonly="">
 
@@ -270,13 +247,27 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row mt-4">
+                                <div class="col-md-12">
+                                    <div class="input-group">
+                               <span class="input-group-btn">
+                                 <a id="lfm_box" data-input="thumbnail" data-preview="holder" class="btn btn-dark"
+                                    style="border-radius: 0px;">
+                                   <i class="fa fa-picture-o"></i> @lang('Feature image')
+                                 </a>
+                               </span>
+                                        <input id="thumbnail" class="form-control" type="text" name="thumbnail_path">
+                                    </div>
+                                    <div id="holder" style="margin-top:15px;max-height:100px;"></div>
+                                </div>
+                            </div>
 
                         </div>
                     </div>
 
 
-                    <button type="submit" class="btn btn-success btn-save mr-2">Save</button>
-                    <a href="{{ route('admin.post.index') }}" class="btn btn-info">Back</a>
+                    <button type="submit" class="btn btn-success btn-save mr-2">@lang('Save')</button>
+                    <a href="{{ route('admin.post.index') }}" class="btn btn-info">@lang('Back')</a>
                 </form>
 
             </div>

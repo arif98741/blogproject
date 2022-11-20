@@ -4,7 +4,7 @@
         <img src="#" alt=""
              class="brand-image img-circle elevation-3"
              style="opacity: .8">
-        <span class="brand-text font-weight-light">Blog</span>
+        <span class="brand-text font-weight-light">@lang('Blog')</span>
         <br>
         <span style="font-size: 14px;">Ariful Islam(administrator)</span>
     </a>
@@ -30,7 +30,7 @@
                     <a href="{{ route('admin.dashboard') }}" class="nav-link ">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
-                            Dashboard
+                            @lang('Dashboard')
 
                         </p>
                     </a>
@@ -48,7 +48,7 @@
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-pen"></i>
                         <p>
-                            Post
+                            @lang('Post')
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
@@ -57,14 +57,14 @@
                         <li class="nav-item">
                             <a href="{{ route('admin.post.create') }}" class="nav-link">
                                 <i class="far fa-plus nav-icon"></i>
-                                <p>Add Post</p>
+                                <p>@lang('Add Post')</p>
 
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('admin.post.index') }}" class="nav-link">
                                 <i class="far fa-plus nav-icon"></i>
-                                <p>Post List</p>
+                                <p>@lang('Post List')</p>
 
                             </a>
                         </li>
@@ -83,7 +83,7 @@
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-copy"></i>
                         <p>
-                            Categories
+                            @lang('Categories')
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
@@ -91,14 +91,14 @@
                         <li class="nav-item">
                             <a href="{{ route('admin.category.create') }}" class="nav-link">
                                 <i class="far fa-plus nav-icon"></i>
-                                <p>Add Categories</p>
+                                <p>@lang('Add Categories')</p>
 
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('admin.category.index') }}" class="nav-link">
                                 <i class="far fa-plus nav-icon"></i>
-                                <p>Category List</p>
+                                <p>@lang('Category List')</p>
 
                             </a>
                         </li>
@@ -117,7 +117,7 @@
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-tags"></i>
                         <p>
-                            Tag
+                            @lang('Tag')
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
@@ -125,14 +125,14 @@
                         <li class="nav-item">
                             <a href="{{ route('admin.tag.create') }}" class="nav-link">
                                 <i class="far fa-plus nav-icon"></i>
-                                <p>Add Tag</p>
+                                <p>@lang('Add Tag')</p>
 
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('admin.tag.index') }}" class="nav-link">
                                 <i class="far fa-plus nav-icon"></i>
-                                <p>Tag List</p>
+                                <p>@lang('Tag List')</p>
 
                             </a>
                         </li>
@@ -142,7 +142,7 @@
                     <a href="{{ url('/logout') }}" class="nav-link">
                         <i class="nav-icon fas fa-sign-out-alt"></i>
                         <p>
-                            Logout
+                            @lang('Logout')
                         </p>
                     </a>
                 </li>

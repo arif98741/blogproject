@@ -148,6 +148,10 @@ $(document).on('click', '[data-action]', function () {
     window[$(this).data('action')]($(this).data('multiple') ? getSelectedItems() : getOneSelectedElement());
 });
 
+$(document).on('click', '#lfm_search_box', function () {
+   alert('hello');
+});
+
 // ==========================
 // ==  Multiple Selection  ==
 // ==========================
@@ -483,7 +487,7 @@ function loadItems(page) {
             $('#nav-buttons > ul').removeClass('d-none');
 
             $('#working_dir').val(working_dir);
-            console.log('Current working_dir : ' + working_dir);
+            console.log('Current working_directory : ' + working_dir);
             var breadcrumbs = [];
             var validSegments = working_dir.split('/').filter(function (e) {
                 return e;
@@ -833,10 +837,6 @@ function dialog(title, value, callback) {
     });
     $('#dialog').modal('show').find('.modal-title').text(title);
 }
-
-$('#lfm_search_box').click(function(){
-   alert('hello');
-});
 
 //this function is for searching files from all list
 function searchFile() {
