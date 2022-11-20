@@ -60,4 +60,8 @@ body {
     color: #fff;
 }
 
+.nav-sidebar ul.li>a{
+    font-weight: 100 !important;
+}
+
 
