@@ -7,7 +7,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-left">
                         <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}"><i
-                                    class="ti-home"></i>&nbsp;Home</a>
+                                    class="fa fa-home"></i>&nbsp;Home</a>
                         </li>
                         <li class="breadcrumb-item "><a href="{{ route('admin.post.index') }}">Posts</a></li>
                         <li class="breadcrumb-item active">{{ $title }}</li>

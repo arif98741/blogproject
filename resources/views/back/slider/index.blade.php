@@ -1,5 +1,5 @@
 @extends('back.layout.layout')
-@section('title','Category List')
+@section('title','Slider List')
 @section('content')
 
     <section class="content-header">
@@ -10,11 +10,11 @@
                         <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}"><i
                                     class="fa fa-home"></i>&nbsp;Home</a>
                         </li>
-                        <li class="breadcrumb-item active">Category List</li>
+                        <li class="breadcrumb-item active">Slider List</li>
                     </ol>
                 </div>
                 <div class="col-sm-6">
-                    <a href="{{ route('admin.category.create') }}" class="btn btn-primary btn-sm float-sm-right">Add
+                    <a href="{{ route('admin.slider.create') }}" class="btn btn-primary btn-sm float-sm-right">Add
                         New</a>
                 </div>
             </div>
@@ -26,7 +26,7 @@
         <div class="col-lg-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Category List</h4>
+                    <h4 class="card-title">Slider List</h4>
 
                     {{--                    tree structure start--}}
                     <style>
@@ -159,7 +159,7 @@
                         <table class="table table-bordered mb-4">
                             <thead>
                             <tr>
-                                <th>Category Name</th>
+                                <th>Slider Name</th>
                                 <th>Image</th>
                                 <th>Created at</th>
                                 <th class="text-center">Status</th>
@@ -203,7 +203,7 @@
 
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink1">
                                                 <a class="dropdown-item"
-                                                   href="{{ route('admin.category.edit', $category->id) }}">Edit</a>
+                                                   href="{{ route('admin.slider.edit', $category->id) }}">Edit</a>
                                                 <a class="dropdown-item" href="javascript:void(0);">Delete</a>
                                             </div>
                                         </div>
@@ -250,7 +250,7 @@
 
                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink1">
                                                         <a class="dropdown-item"
-                                                           href="{{ route('admin.category.edit', $childCat->id) }}">Edit</a>
+                                                           href="{{ route('admin.slider.edit', $childCat->id) }}">Edit</a>
                                                         <a class="dropdown-item"
                                                            href="javascript:void(0);">Delete</a>
                                                     </div>
@@ -302,7 +302,7 @@
                                                             <div class="dropdown-menu"
                                                                  aria-labelledby="dropdownMenuLink1">
                                                                 <a class="dropdown-item"
-                                                                   href="{{ route('admin.category.edit', $secondChild->id) }}">Edit</a>
+                                                                   href="{{ route('admin.slider.edit', $secondChild->id) }}">Edit</a>
                                                                 <a class="dropdown-item"
                                                                    href="javascript:void(0);">Delete</a>
                                                             </div>

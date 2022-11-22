@@ -7,7 +7,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-left">
                         <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}"><i
-                                    class="ti-home"></i>&nbsp;@lang('Home')</a>
+                                    class="fa fa-home"></i>&nbsp;@lang('Home')</a>
                         </li>
                         <li class="breadcrumb-item"><a href="{{ route('admin.category.index') }}">@lang('Category') </a></li>
                         <li class="breadcrumb-item active">@lang('Add Category')</li>

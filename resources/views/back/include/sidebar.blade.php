@@ -175,7 +175,16 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item @if(route_exist_in_sidebar([])) menu-is-opening menu-open @else @endif">
+                @php
+
+                    $sliderRoutes = [
+                      'admin.slider.create',
+                      'admin.slider.edit',
+                      'admin.slider.index',
+                    ];
+
+                @endphp
+                <li class="nav-item @if(route_exist_in_sidebar($sliderRoutes)) menu-is-opening menu-open @else @endif">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-play"></i>
                         <p>
@@ -183,12 +192,17 @@
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
-                    <ul class="nav nav-treeview" @if(route_exist_in_sidebar([])) style="display: block" @else @endif>
+                    <ul class="nav nav-treeview" @if(route_exist_in_sidebar($sliderRoutes)) style="display: block" @else @endif>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{ route('admin.slider.create') }}" class="nav-link">
                                 <i class="far fa-plus nav-icon"></i>
-                                <p>@lang('Add Tag')</p>
-
+                                <p>@lang('Add Slider')</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.slider.index') }}" class="nav-link">
+                                <i class="far fa-plus nav-icon"></i>
+                                <p>@lang('Slider List')</p>
                             </a>
                         </li>
 
