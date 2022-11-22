@@ -25,6 +25,7 @@ Route::group(
     Route::resource('post', 'PostController')->except(['show']);
     Route::get('post/restore/{id}', 'PostController@restore')->name('post.restore');
     Route::resource('category', 'CategoryController')->except(['show']);
+    Route::resource('slider', 'SliderController')->except(['show']);
     Route::resource('tag', 'TagController')->except(['show']);
     Route::get('dashboard', 'AdminController@dashboard')->name('dashboard');
 });

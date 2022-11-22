@@ -1,5 +1,5 @@
 @extends('back.layout.layout')
-@section('title','Edit Category')
+@section('title','Edit Slider')
 @section('content')
     <div class="content-header">
 
@@ -8,8 +8,8 @@
                 <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}"><i
                             class="fa fa-home"></i>&nbsp;@lang('Home')</a>
                 </li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.category.index') }}">@lang('Category') </a></li>
-                <li class="breadcrumb-item active" aria-current="page">@lang('Edit Category')</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.slider.index') }}">@lang('Sliders') </a></li>
+                <li class="breadcrumb-item active" aria-current="page">@lang('Edit Slider')</li>
             </ol>
         </nav>
 
@@ -19,14 +19,14 @@
             <div class="card">
                 <div class="card-body">
                     <form id="categoryFormSubmit" class="forms-sample"
-                          action="{{ route('admin.category.update',$category->id) }}"
+                          action="{{ route('admin.slider.update',$category->id) }}"
                           enctype="multipart/form-data" method="POST">
                         @csrf
                         @method('put')
                         <div class="row">
                             <div class="col-md-8">
                                 <div class="form-group">
-                                    <label for="">Category Title</label>
+                                    <label for="">Slider Title</label>
                                     <input name="category_name"
                                            value="{{ (!empty(old('category_name'))) ? old('category_name') : $category->category_name }}"
                                            id="category_name"
@@ -75,7 +75,7 @@
                         if (xhr.status === 200) {
                             toastr.success(data.success);
                             setTimeout(function () {
-                                 window.location.href = '{{ route('admin.category.index') }}';
+                                 window.location.href = '{{ route('admin.slider.index') }}';
                             }, 1000);
                         }
                     },

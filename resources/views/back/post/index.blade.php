@@ -6,7 +6,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}"><i
-                            class="ti-home"></i>&nbsp;Home</a>
+                            class="fa fa-home"></i>&nbsp;Home</a>
                 </li>
                 <li class="breadcrumb-item active">Post</li>
             </ol>

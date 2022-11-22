@@ -6,7 +6,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}"><i
-                            class="ti-home"></i>&nbsp;@lang('Home')</a>
+                            class="fa fa-home"></i>&nbsp;@lang('Home')</a>
                 </li>
                 <li class="breadcrumb-item"><a href="{{ route('admin.tag.index') }}">@lang('Tag') </a></li>
                 <li class="breadcrumb-item active" aria-current="page">@lang('Add Tag')</li>
