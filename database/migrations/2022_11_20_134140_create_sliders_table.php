@@ -16,7 +16,7 @@ class CreateSlidersTable extends Migration
         Schema::create('sliders', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title');
-            $table->string('type', 100)->nullable();
+            $table->unsignedBigInteger('slider_type')->nullable();
             $table->string('thumbnail', 255)->nullable();
             $table->string('image', 255)->nullable();
             $table->tinyInteger('status')->default(1);
@@ -26,6 +26,7 @@ class CreateSlidersTable extends Migration
         });
 
         Schema::table('sliders', function (Blueprint $table) {
+            $table->foreign('slider_type')->references('id')->on('slider_types')->onUpdate('cascade')->onDelete('set null');
             $table->foreign('created_by')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
             $table->foreign('updated_by')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
         });
