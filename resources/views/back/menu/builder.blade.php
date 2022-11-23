@@ -39,12 +39,12 @@
                                 </div>
                                 <button class="btn btn-primary" id="addButton">
                                     <i class="fa fa-plus-circle"
-                                       aria-hidden="true"></i> Add Item
+                                       aria-hidden="true"></i> Add New Menu
                                 </button>
                             </form>
 
                             <form class="" id="menu-editor" style="display: none;">
-                                <h3>Editing <span id="currentEditName"></span></h3>
+                                <h3>Edit <span id="currentEditName"></span></h3>
                                 <div class="form-group">
                                     <label for="addInputName">Name</label>
                                     <input type="text" class="form-control" id="editInputName" placeholder="Item name"
