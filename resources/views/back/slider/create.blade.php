@@ -36,11 +36,25 @@
                                     <label for="">@lang('Slider Title')</label>
                                     <input name="title" id="title" value="{{ old('title') }}"
                                            type="text" class="form-control">
+                                    @if ($errors->has('title'))
+                                        <span class="help-block">
+                                            <p class="text-red">{{ $errors->first('title') }}</p> </span>
+                                    @endif
                                 </div>
                                 <div class="form-group">
                                     <label for="">Slider Type</label>
-                                    <input name="type" id="type" value="{{ old('type') }}"
-                                           type="text" class="form-control">
+                                    <select name="slider_type_id" id="" class="form-control">
+                                        <option value="">Select Type</option>
+                                        @foreach($slider_types as $slider_type)
+
+                                            <option
+                                                value="{{ $slider_type->id }}">{{ $slider_type->type_name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('slider_type_id'))
+                                        <span class="help-block">
+                                            <p class="text-red">{{ $errors->first('slider_type_id') }}</p> </span>
+                                    @endif
                                 </div>
 
                                 <div class="form-group">
@@ -52,17 +66,25 @@
                                            <i class="fa fa-picture-o"></i> @lang('Slider image')
                                          </a>
                                        </span>
-                                        <input id="thumbnail" class="form-control" type="text"
-                                               name="thumbnail_path">
+                                        <input id="thumbnail" class="form-control" required type="text"
+                                               name="image">
+                                        @if ($errors->has('image'))
+                                            <span class="help-block">
+                                            <p class="text-red">{{ $errors->first('image') }}</p> </span>
+                                        @endif
                                     </div>
                                     <div id="image_preview" style="margin-top:15px;max-height:100px;"></div>
                                 </div>
                                 <div class="form-group">
                                     <label for="">Status</label>
                                     <select name="status" id="" class="form-control">
-                                        <option value="1">Active</option>
-                                        <option value="0">Not Active</option>
+                                        <option value="1" @if(old('status') == 1) selected @endif>Active</option>
+                                        <option value="0" @if(old('status') == 0) selected @endif>Not Active</option>
                                     </select>
+                                    @if ($errors->has('status'))
+                                        <span class="help-block">
+                                            <p class="text-red">{{ $errors->first('status') }}</p> </span>
+                                    @endif
                                 </div>
                             </div>
                         </div>
