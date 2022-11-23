@@ -27,7 +27,8 @@ Route::group(
     Route::resource('category', 'CategoryController')->except(['show']);
     Route::resource('slider', 'SliderController')->except(['show']);
     Route::resource('tag', 'TagController')->except(['show']);
-    Route::get('dashboard', 'AdminController@dashboard')->name('dashboard');
+    Route::resource('menu', 'MenuController')->except(['show']);
+    Route::match(['get', 'post'], 'menu/builder', 'MenuController@menuBuilder');
 });
 
 Route::get('blog/view', function () {
