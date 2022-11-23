@@ -27,11 +27,10 @@
 @stack('extra-script')
 <script type="text/javascript">
 
-    @if(session()->has('alert'))
+    @if(session()->has('alert-type'))
     @php
-        $alert = session()->get('alert');
-        $alertType = $alert['type'];
-        $alertMessage = $alert['message'];
+        $alertType = session()->get('alert-type');
+        $alertMessage = session()->get('message');
     @endphp
 
     @if($alertType == 'success')

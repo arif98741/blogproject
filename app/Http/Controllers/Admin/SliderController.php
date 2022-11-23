@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
 use App\Models\Slider;
+use App\Models\SliderType;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Response;
-use Validator;
+use Illuminate\Validation\ValidationException;
 
 
 class SliderController extends Controller
@@ -20,11 +20,10 @@ class SliderController extends Controller
      */
     public function index()
     {
-
         $data = [
             //'categories' => Category::orderBy('category_name')->get()
             //     'categories' => Category::categoryTree()
-            'categories' => Slider::orderBy('id','asc')->get(),
+            'sliders' => Slider::orderBy('id', 'asc')->get(),
         ];
 
 
@@ -36,7 +35,9 @@ class SliderController extends Controller
      */
     public function create()
     {
-        $data = [];
+        $data = [
+            'slider_types' => SliderType::orderBy('type_name')->get(),
+        ];
         return view('back.slider.create')->with($data);
     }
 
@@ -48,7 +49,8 @@ class SliderController extends Controller
     public function edit(Request $request, Slider $slider)
     {
         $data = [
-            'category' => $slider
+            'slider' => $slider,
+            'slider_types' => SliderType::orderBy('type_name')->get(),
         ];
         return view('back.slider.edit')->with($data);
     }
@@ -56,81 +58,94 @@ class SliderController extends Controller
 
     /**
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return RedirectResponse
+     * @throws ValidationException
      */
     public function store(Request $request)
     {
         $rules = [
-            'category_name' => 'required|min:3|max:100|unique:categories',
+            'title' => 'required|min:3',
+            'slider_type_id' => 'required|numeric',
+            'image' => 'required',
+            'status' => 'required',
         ];
 
 
-        $validator = Validator::make($data = $request->all(), $rules);
+        $data = $this->validate($request, $rules);
+        $url = parse_url($data['image']);
+        $data['image'] = ltrim($url['path'], '/');
+        $data['created_by'] = $this->getUserId();
 
-        if ($validator->fails()) {
-            return Response::json(array(
-                'success' => false,
-                'errors' => $validator->getMessageBag()->toArray()
-            ), 400); // 400 being the HTTP code for an invalid request.
+
+        if (Slider::create($data)) {
+            return redirect()->route('admin.slider.index')->with([
+                'message' => 'Slider added successfully !',
+                'alert-type' => 'success'
+            ]);
         }
 
-        if (Category::create($data)) {
-
-            return Response::json(array('success' => 'Category Inserted successfully'), 200);
-        }
-
-        return Response::json(array(
-            'success' => false,
-            'errors' => [
-                'error' => [
-                    'Failed to insert category'
-                ]
+        return redirect()->route('admin.slider.create')->with(
+            [
+                'message' => 'Failed to add slider',
+                'alert-type' => 'error'
             ]
-        ), 400);
-
+        );
 
     }
 
     /**
-     * @return void
+     * @return RedirectResponse
+     * @throws ValidationException
      */
     public function update(Request $request, Slider $slider)
     {
         $rules = [
-            'category_name' => 'required|min:3|max:100|unique:categories,category_name,' . $category->id
+            'title' => 'required|min:3',
+            'slider_type_id' => 'required|numeric',
+            'image' => 'required',
+            'status' => 'required',
         ];
 
 
-        $validator = Validator::make($data = $request->all(), $rules);
+        $data = $this->validate($request, $rules);
+        $url = parse_url($data['image']);
+        $data['image'] = ltrim($url['path'], '/');
+        $data['updated_by'] = $this->getUserId();
 
-        if ($validator->fails()) {
-            return Response::json(array(
-                'success' => false,
-                'errors' => $validator->getMessageBag()->toArray()
-            ), 400); // 400 being the HTTP code for an invalid request.
+        if ($slider->update($data)) {
+            return redirect()->route('admin.slider.index')->with([
+                'message' => 'Slider updated successfully !',
+                'alert-type' => 'success'
+            ]);
         }
 
-        if ($category->update($data)) {
-
-            return Response::json(array('success' => 'Category updated successfully'), 200);
-        }
-
-        return Response::json(array(
-            'success' => false,
-            'errors' => [
-                'error' => [
-                    'Failed to insert category'
-                ]
+        return redirect()->route('admin.slider.create')->with(
+            [
+                'message' => 'Failed to update slider',
+                'alert-type' => 'error'
             ]
-        ), 400);
+        );
+
 
     }
 
     /**
-     * @return void
+     * @return RedirectResponse
      */
-    public function destroy()
+    public function destroy(Request $request, Slider $slider)
     {
+        if ($slider->delete()) {
+            return redirect()->route('admin.slider.index')->with([
+                'message' => 'Slider deleted successfully !',
+                'alert-type' => 'success'
+            ]);
+        }
 
+        return redirect()->route('admin.slider.create')->with(
+            [
+                'message' => 'Failed to delete slider',
+                'alert-type' => 'error'
+            ]
+        );
     }
 }
