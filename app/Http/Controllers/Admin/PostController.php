@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\AppTrait\AuthTrait;
 use App\Facades\AppFacade;
 use App\Helpers\ImageHelper;
 use App\Http\Controllers\Controller;
@@ -23,7 +22,6 @@ use Illuminate\Validation\ValidationException;
 
 class PostController extends Controller
 {
-    use AuthTrait;
 
     /**
      * @return Application|Factory|View
@@ -94,14 +92,14 @@ class PostController extends Controller
             $this->syncCategoryTag($request, $post);
 
             AppFacade::generateActivityLog('posts', 'create', $post->id);
-            return redirect()->route('admin.post.index')->with('alert', [
-                'type' => 'success',
+            return redirect()->route('admin.post.index')->with([
+                'alert-type' => 'success',
                 'message' => 'Post Saved successfully',
             ]);
         }
 
-        return redirect()->route('admin.post.index')->with('alert', [
-            'type' => 'error',
+        return redirect()->route('admin.post.index')->with([
+            'alert-type' => 'error',
             'message' => 'Post failed to insert',
         ]);
     }
@@ -167,14 +165,14 @@ class PostController extends Controller
             $this->syncCategoryTag($request, $post);
             AppFacade::generateActivityLog('posts', 'update', $post->id);
 
-            return redirect()->route('admin.post.index')->with('alert', [
-                'type' => 'success',
+            return redirect()->route('admin.post.index')->with([
+                'alert-type' => 'success',
                 'message' => 'Post updated successfully',
             ])->with($data);
         }
 
-        return redirect()->route('admin.post.index')->with('alert', [
-            'type' => 'error',
+        return redirect()->route('admin.post.index')->with([
+            'alert-type' => 'error',
             'message' => 'Post failed to update',
         ])->with($data);
     }
@@ -191,8 +189,8 @@ class PostController extends Controller
         $post->delete();
 
         AppFacade::generateActivityLog('posts', 'delete', $post->id);
-        return redirect()->route('admin.post.index')->with('alert', [
-            'type' => 'success',
+        return redirect()->route('admin.post.index')->with([
+            'alert-type' => 'success',
             'message' => 'Post deleted successfully. But it is trash',
         ]);
     }
@@ -210,13 +208,13 @@ class PostController extends Controller
             $post->status = 'published';
             $post->save();
             AppFacade::generateActivityLog('posts', 'restore', $post->id);
-            return redirect()->route('admin.post.index')->with('alert', [
-                'type' => 'success',
+            return redirect()->route('admin.post.index')->with([
+                'alert-type' => 'success',
                 'message' => 'Post successfully restored',
             ]);
         } catch (Exception $e) {
-            return redirect()->route('admin.post.index')->with('alert', [
-                'type' => 'error',
+            return redirect()->route('admin.post.index')->with([
+                'alert-type' => 'error',
                 'message' => 'Failed to restore post ' . $e->getMessage(),
             ]);
         }
@@ -231,7 +229,6 @@ class PostController extends Controller
      */
     protected function syncCategoryTag(Request $request, Post $post): void
     {
-
         if ($request->has('categories_id')) {
             foreach ($request->categories_id as $category) {
                 $blog_cats ['category_id'] = $category;
