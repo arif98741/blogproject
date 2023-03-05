@@ -29,6 +29,7 @@ Route::group(
     Route::resource('tag', 'TagController')->except(['show']);
     Route::resource('menu', 'MenuController')->except(['show']);
     Route::match(['get', 'post'], 'menu/builder', 'MenuController@menuBuilder');
+    Route::resource('author', 'AuthorController');
 });
 
 Route::get('blog/view', function () {
