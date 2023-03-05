@@ -275,10 +275,16 @@
                     </a>
                     <ul class="nav nav-treeview" @if(route_exist_in_sidebar([])) style="display: block" @else @endif>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{ route('admin.author.create') }}" class="nav-link">
                                 <i class="far fa-plus nav-icon"></i>
-                                <p>@lang('Add Tag')</p>
+                                <p>@lang('Add New Author')</p>
+                            </a>
+                        </li>
 
+                        <li class="nav-item">
+                            <a href="{{ route('admin.author.index') }}" class="nav-link">
+                                <i class="far fa-plus nav-icon"></i>
+                                <p>@lang('Author List')</p>
                             </a>
                         </li>
 
