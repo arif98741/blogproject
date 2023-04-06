@@ -26,7 +26,6 @@ class AdminController extends Controller
             'author' => User::count(),
         ];
 
-
         return view('back.dashboard')->with($data);
     }
 }

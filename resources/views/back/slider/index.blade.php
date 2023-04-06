@@ -35,6 +35,7 @@
                             <tr>
                                 <th>#</th>
                                 <th>Slider Name</th>
+                                <th>Type</th>
                                 <th>Image</th>
                                 <th>Updated at</th>
                                 <th>Created at</th>
@@ -49,6 +50,7 @@
                                 <tr>
                                     <td>{{ ++$key }}</td>
                                     <td><strong>{{ $slider->title }}</strong>
+                                    <td>{{ $slider->slider_type->type_name }}
                                     </td>
                                     <td><img src="{{ asset($slider->image) }}" style="width: 70px; height: 70px;"
                                              alt=""></td>
@@ -106,8 +108,6 @@
     </script>
     @push('extra-script')
 
-        ...
-        // Mayank Pandeyz's solution for confirmation customized for this implementation
         <script>
             $('.delete-slider').click(function (e) {
                 e.preventDefault() // Don't post the form, unless confirmed

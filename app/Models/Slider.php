@@ -10,4 +10,12 @@ class Slider extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function slider_type()
+    {
+        return $this->belongsTo(SliderType::class);
+    }
 }

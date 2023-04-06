@@ -23,7 +23,7 @@ class SliderController extends Controller
         $data = [
             //'categories' => Category::orderBy('category_name')->get()
             //     'categories' => Category::categoryTree()
-            'sliders' => Slider::orderBy('id', 'asc')->get(),
+            'sliders' => Slider::with(['slider_type'])->orderBy('id', 'asc')->get(),
         ];
 
 
