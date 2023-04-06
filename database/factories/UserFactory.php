@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Helper\Status;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
@@ -28,6 +29,12 @@ class UserFactory extends Factory
             'email' => 'admin@gmail.com',
             'email_verified_at' => now(),
             'password' => Hash::make('123'), // password
+            'status' => $this->faker->randomElement(Status::getSelectedStatuses([
+                Status::STATUS_ACTIVE,
+                Status::STATUS_INACTIVE,
+                Status::STATUS_PENDING,
+                Status::STATUS_NEED_MODIFICATION
+            ])), // password
             'remember_token' => Str::random(10),
         ];
     }

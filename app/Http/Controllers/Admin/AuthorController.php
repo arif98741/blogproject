@@ -3,254 +3,142 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Facades\AppFacade;
-use App\Helpers\ImageHelper;
+use App\Helper\Status;
 use App\Http\Controllers\Controller;
-use App\Models\Category;
-use App\Models\CategoryPost;
-use App\Models\Post;
-use App\Models\PostTag;
-use App\Models\Tag;
+use App\Models\Author;
 use App\Service\AuthorService;
-use Exception;
+use DB;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\File;
-use Illuminate\Validation\ValidationException;
 
 class AuthorController extends Controller
 {
-    private $service;
+    /**
+     * @var AuthorService
+     */
+    private AuthorService $authorService;
 
+    /**
+     *
+     */
     public function __construct()
     {
-        $this->service = new AuthorService;
+        $this->authorService = new AuthorService;
         parent::__construct();
     }
 
     /**
-     * @return Application|Factory|View
-     */
-    public function index()
-    {
-        $data = [
-            'posts' => Post::with(['user', 'tags', 'categories'])
-                ->withTrashed()
-                ->orderBy('id', 'desc')
-                ->paginate(20),
-            'title' => 'Post List',
-        ];
-
-        return view('back.author.index')->with($data);
-    }
-
-
-    /**
-     * @return Application|Factory|View
+     * @return Application|Factory|View|\Illuminate\Foundation\Application
      */
     public function create()
     {
-        $data = [
-            'categories' => Category::categoryTree('category_name', 'asc'),
-            'tags' => Tag::orderBy('tag_name')->get(),
-            'post_statuses' => Config::get('app-config.post_status'),
-            'title' => 'Add Post',
-        ];
+        $authors = Author::all();
+        $statuses = Status::getSelectedStatuses([
+            Status::STATUS_ACTIVE,
+            Status::STATUS_INACTIVE,
+            Status::STATUS_PENDING,
+            Status::STATUS_NEED_MODIFICATION
+        ]);
 
-        return view('back.author.create')->with($data);
+
+        return view('back.author.create', compact('authors', 'statuses'));
     }
 
 
     /**
+     * @return Application|Factory|View|\Illuminate\Foundation\Application
+     */
+    public function index()
+    {
+        $authors = $this->authorService->all();
+        $title = 'Authors';
+        return view('back.author.index', compact('authors','title'));
+    }
+
+    
+    /**
      * @param Request $request
      * @return RedirectResponse
-     * @throws ValidationException
      */
     public function store(Request $request)
     {
-        $rules = [
-            'title' => 'required|min:3|unique:posts',
-            'slug' => 'required|min:3|unique:posts',
-            'description' => 'required',
-            'categories_id' => 'required',
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:6',
             'status' => 'required',
-            'meta_title' => 'sometimes|min:3|max:100',
-            'meta_description' => 'sometimes|min:3|max:160',
-            'meta_keywords' => 'sometimes|max:160',
-        ];
-        $data = $this->validate($request, $rules);
-        $data['user_id'] = $this->getUserId();
-        $data['created_by'] = $this->getUserId();
-
-
-        if ($request->hasFile('feature_image')) {
-            $uploadFile = ImageHelper::imageUpload($request, 'feature_image', 'post', 'post', true, 500, 450);
-
-            $data['feature_image'] = $uploadFile['file_path'];
-            $data['thumbnail_image'] = $uploadFile['thumb_path'];
-        }
-
-        unset($data['categories_id']);
-
-        if ($post = Post::create($data)) {
-            $this->syncCategoryTag($request, $post);
-
-            AppFacade::generateActivityLog('posts', 'create', $post->id);
-            return redirect()->route('admin.post.index')->with([
-                'alert-type' => 'success',
-                'message' => 'Post Saved successfully',
-            ]);
-        }
-
-        return redirect()->route('admin.post.index')->with([
-            'alert-type' => 'error',
-            'message' => 'Post failed to insert',
         ]);
-    }
 
-    /**
-     * @param Post $post
-     * @return Application|Factory|View
-     */
-    public function edit(Post $post)
-    {
-        $data = [
-            'categories' => Category::categoryTree('category_name', 'asc'),
-            'post_statuses' => Config::get('app-config.post_status'),
-            'tags' => Tag::orderBy('tag_name')->get(),
-            'post_tags' => PostTag::where('post_id', $post->id)->get()->pluck('tag_id')->toArray(),
-            'post_categories' => CategoryPost::where('post_id', $post->id)->get()->pluck('category_id')->toArray(),
-            'post' => $post,
-            'title' => 'Edit Post - ' . $post->title,
-        ];
-
-        return view('back.author.edit')->with($data);
-    }
-
-    /**
-     * @return RedirectResponse
-     * @throws ValidationException
-     */
-    public function update(Request $request, Post $post)
-    {
-        $rules = [
-            'title' => 'required|min:3',
-            'slug' => 'required|min:3',
-            'description' => 'required',
-            'categories_id' => 'required',
-            'status' => 'required',
-            'meta_title' => 'sometimes|min:3|max:100',
-            'meta_description' => 'sometimes|min:3|max:160',
-            'meta_keywords' => 'sometimes|max:160',
-        ];
+        $author = new Author;
+        $author->name = $validatedData['name'];
+        $author->email = $validatedData['email'];
+        $author->password = bcrypt($validatedData['password']);
+        $author->status = $validatedData['status'];
 
 
-        $data = $this->validate($request, $rules);
-        $data['updated_by'] = $this->getUserId();
-        unset($data['categories_id']);
-
-        if ($request->hasFile('feature_image')) {
-            if (File::exists($post->feature_image)) {
-                File::delete($post->feature_image);
-            }
-            if (File::exists($post->thumbnail_image)) {
-                File::delete($post->thumbnail_image);
-            }
-            $uploadFile = ImageHelper::imageUpload($request, 'feature_image', 'post', 'post', true, 500, 450);
-            $data['feature_image'] = $uploadFile['file_path'];
-            $data['thumbnail_image'] = $uploadFile['thumb_path'];
+        if ( $author->save()) {
+            AppFacade::generateActivityLog('authors', 'create', DB::getPdo()->lastInsertId());
+            flash()->addSuccess('Author successfully created');
+            return redirect()->route('admin.author.index');
         }
 
-        if ($post->update($data)) {
-
-            CategoryPost::where('post_id', $post->id)->delete();
-            PostTag::where('post_id', $post->id)->delete();
-
-            $this->syncCategoryTag($request, $post);
-            AppFacade::generateActivityLog('posts', 'update', $post->id);
-
-            return redirect()->route('admin.post.index')->with([
-                'alert-type' => 'success',
-                'message' => 'Post updated successfully',
-            ])->with($data);
-        }
-
-        return redirect()->route('admin.post.index')->with([
-            'alert-type' => 'error',
-            'message' => 'Post failed to update',
-        ])->with($data);
+        flash()->addError('Author failed to add');
+        return redirect()->back();
     }
+
+    // READ
 
     /**
-     * @param Request $request
-     * @param Post $post
-     * @return RedirectResponse
+     * @param $id
+     * @return Application|Factory|View|\Illuminate\Foundation\Application
      */
-    public function destroy(Request $request, Post $post): RedirectResponse
+    public function show($id)
     {
-        $post->status = 'deleted';
-        $post->save();
-        $post->delete();
-
-        AppFacade::generateActivityLog('posts', 'delete', $post->id);
-        return redirect()->route('admin.post.index')->with([
-            'alert-type' => 'success',
-            'message' => 'Post deleted successfully. But it is trash',
-        ]);
+        $author = Author::find($id);
+        return view('back.author.show', compact('author'));
     }
+
+    // UPDATE
 
     /**
      * @param Request $request
      * @param $id
      * @return RedirectResponse
      */
-    public function restore(Request $request, $id): RedirectResponse
+    public function update(Request $request, $id)
     {
-        try {
-            Post::onlyTrashed()->where('id', $id)->restore();
-            $post = Post::find($id);
-            $post->status = 'published';
-            $post->save();
-            AppFacade::generateActivityLog('posts', 'restore', $post->id);
-            return redirect()->route('admin.post.index')->with([
-                'alert-type' => 'success',
-                'message' => 'Post successfully restored',
-            ]);
-        } catch (Exception $e) {
-            return redirect()->route('admin.post.index')->with([
-                'alert-type' => 'error',
-                'message' => 'Failed to restore post ' . $e->getMessage(),
-            ]);
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:authors,email,' . $id,
+            'password' => 'nullable|min:8',
+            'status' => 'required',
+        ]);
+
+        $author = Author::find($id);
+        $author->name = $validatedData['name'];
+        $author->email = $validatedData['email'];
+        if ($validatedData['password']) {
+            $author->password = bcrypt($validatedData['password']);
         }
+        $author->status = $validatedData['status'];
+        $author->save();
 
-
+        return redirect()->route('authors.index')->with('success', 'Author updated successfully');
     }
+
+    // DELETE
 
     /**
-     * @param Request $request
-     * @param Post $post
-     * @return void
+     * @param $id
+     * @return RedirectResponse
      */
-    protected function syncCategoryTag(Request $request, Post $post): void
+    public function destroy($id)
     {
-        if ($request->has('categories_id')) {
-            foreach ($request->categories_id as $category) {
-                $blog_cats ['category_id'] = $category;
-                $blog_cats['post_id'] = $post->id;
-                CategoryPost::create($blog_cats);
-            }
-        }
-
-        if ($request->has('tags')) {
-            foreach ($request->tags as $tag) {
-                $blog_tags ['tag_id'] = $tag;
-                $blog_tags['post_id'] = $post->id;
-                PostTag::create($blog_tags);
-            }
-        }
+        $author = Author::find($id);
+        $author->delete();
+        return redirect()->route('authors.index')->with('success', 'Author deleted successfully');
     }
-
 }

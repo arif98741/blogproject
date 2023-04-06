@@ -9,7 +9,7 @@
                         <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}"><i
                                     class="fa fa-home"></i>&nbsp;@lang('Home')</a>
                         </li>
-                        <li class="breadcrumb-item"><a href="{{ route('admin.category.index') }}">@lang('Author') </a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.author.index') }}">@lang('Author') </a></li>
                         <li class="breadcrumb-item active">@lang('Add Author')</li>
                     </ol>
                 </div>
@@ -24,19 +24,39 @@
         <div class="col-md-8 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <form id="categoryFormSubmit" class="forms-sample"
-                          action="{{ route('admin.category.store') }}"
+                    <form id="authorFormSubmit" class="forms-sample"
+                          action="{{ route('admin.author.store') }}"
                           enctype="multipart/form-data" method="POST">
                         @csrf
                         @method('post')
                         <div class="row">
                             <div class="col-md-8">
                                 <div class="form-group">
-                                    <label for="">@lang('Author Title')</label>
-                                    <input name="category_name" id="category_name"
+                                    <label for="">@lang('Author Name')</label>
+                                    <input name="name" id="name" placeholder="Enter author name" required
                                            type="text" class="form-control">
                                 </div>
 
+                                <div class="form-group">
+                                    <label for="">@lang('Email')</label>
+                                    <input name="email" id="email" placeholder="Enter author email" required
+                                           type="email" class="form-control">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="">@lang('Password')</label>
+                                    <input name="password" id="password" placeholder="Enter author password, min 6 characters" required
+                                           type="text" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="">@lang('Status')</label>
+                                    <select name="status" id="" class="form-control">
+                                        <option value="">Select</option>
+                                        @foreach($statuses as $key=>  $status)
+                                            <option value="{{ $status }}">{{ $key }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                                 <div class="form-group">
                                     <label for="">@lang('Author Thumbanil')</label>
                                     <input name="image" id="imgFile"
@@ -82,7 +102,8 @@
                 readURL(this);
             });
 
-            $("#categoryFormSubmit").submit(function (e) {
+            /*
+            $("#authorFormSubmit").submit(function (e) {
                 e.preventDefault(); // avoid to execute the actual submit of the form.
 
                 const form = $(this);
@@ -90,6 +111,7 @@
 
 
                 $('.btn-save').text('Saving');
+                $(this).submit()
                 $.ajax({
                     type: "POST",
                     url: url,
@@ -99,10 +121,12 @@
                             $('#imgFile').val('');
                             $('#imgPreview').addClass('d-none');
                             toastr.success(data.success);
+                            window.location.href({{ route('admin.author.index') }});
                         }
                     },
                     error: function (e) {
                         let errors = e.responseJSON.errors;
+
                         Object.keys(errors).forEach(key => {
                             toastr.error(errors[key][0]);
                         });
@@ -114,7 +138,7 @@
 
                         $('.btn-save').text('Save');
                     }
-                });
+                });*/
             });
         </script>
 
